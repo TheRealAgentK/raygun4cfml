@@ -16,22 +16,6 @@ limitations under the License.
 
 <cfcomponent output="false">
 
-	<cffunction name="needsHTTPSecurityProviderHack" access="public" output="false" returntype="boolean">
-
-		<cfscript>
-
-			var productCheck = new tools.ProductCheck().getServerProductInfo();
-
-			if (structCount(productCheck) && productCheck.cf_server == "ACF" && productCheck.server_main_version == 9 && ListFindNoCase("Developer,Enterprise",productCheck.product_level)) {
-				return true;
-			}
-
-			return false;
-		</cfscript>
-
-
-	</cffunction>
-
 	<cffunction name="isLucee" access="public" output="false" returntype="boolean">
 		<cfscript>
 			var productCheck = new tools.ProductCheck().getServerProductInfo();
