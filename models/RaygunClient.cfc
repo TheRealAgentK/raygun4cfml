@@ -1,4 +1,4 @@
-/* 
+/**
 Copyright 2021 Kai Koenig, Ventego Creative Ltd
 
 Licensed under the Apache License, Version 2.0 (the "License");
@@ -75,7 +75,7 @@ component accessors="true" {
         var messageContent = message.build(duplicate(issueData));
         var jSONData = serializeJSON(messageContent);
         // Remove '//' in case CF is adding it when serializing JSON (which is recommended in the ACF Lockdown Guide)
-        // This will only work if the user has setup none or the default prefix for JSON data
+        // This will only work if the user has setupeither none or the default prefix for JSON data
         jSONData = ReplaceNoCase(trim(jSONData), "//{", "{");
         jSONData = ReplaceNoCase(trim(jSONData), "//[", "[");
     
@@ -88,33 +88,33 @@ component accessors="true" {
         return postResult;
 	}
 
-	private void function applyFilter(required RaygunContentFilter contentFilter) output=false {
+	private void function applyFilter(required RaygunContentFilter contentFilter) {
 
 		var defaultScopes = [url,form];
-            var filter = arguments.contentFilter.getFilter();
-            var match = {};
-            var matchResult = "";
+        var filter = arguments.contentFilter.getFilter();
+        var match = {};
+        var matchResult = "";
 
-            for (var i=1; i<=ArrayLen(filter); i++)
+        for (var i=1; i<=ArrayLen(filter); i++)
+        {
+            // current filter object (filter,replacement)
+            match = filter[i];
+
+            // loop over scopes
+            for (var j=1; j<=ArrayLen(defaultScopes); j++)
             {
-                // current filter object (filter,replacement)
-                match = filter[i];
-
-                // loop over scopes
-                for (var j=1; j<=ArrayLen(defaultScopes); j++)
+                // for each scope loop over keys
+                for (var key in defaultScopes[j])
                 {
-                    // for each scope loop over keys
-                    for (var key in defaultScopes[j])
-                    {
-                        matchResult = reMatchNoCase(match.filter,key);
+                    matchResult = reMatchNoCase(match.filter,key);
 
-                        if (isArray(matchResult) && ArrayLen(matchResult))
-                        {
-                            defaultScopes[j][key] = match.replacement;
-                        }
+                    if (isArray(matchResult) && ArrayLen(matchResult))
+                    {
+                        defaultScopes[j][key] = match.replacement;
                     }
                 }
             }
+        }
 	}
 
 }
