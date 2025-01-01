@@ -15,17 +15,17 @@ component extends="samples.Application" {
                 "justAnotherParam": "test"
             }
         };
-        var customUserData = new com.raygun.user.RaygunUserCustomData(customUserDataRaw);
+        var customUserData = new com.raygun.user.RaygunUserCustomData()
+            .userCustomData(customUserDataRaw);
 
         var tags = ["onError", "unfiltered", "unhandled exception"];
            
-        var userIdentifier = new com.raygun.message.RaygunIdentifierMessage(
-            identifier = "test@test.com",
-            isAnonymous = false,
-            UUID = "47e432fff11",
-            firstName = "Test",
-            fullName = "Tester"
-        );
+        var userIdentifier = new com.raygun.message.RaygunIdentifierMessage()
+            .identifier("test@test.com")
+            .isAnonymous(false)
+            .uuid("47e432fff11")
+            .firstName("Test")
+            .fullName("Tester");
 
         var raygun = new "nz.co.ventego-creative.raygun4cfml.RaygunClient"(
             apiKey = variables.RAYGUNAPIKEY,
