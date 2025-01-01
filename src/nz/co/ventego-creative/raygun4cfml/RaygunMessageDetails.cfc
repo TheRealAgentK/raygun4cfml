@@ -14,9 +14,9 @@ See the License for the specific language governing permissions and
 limitations under the License.
 --->
 
-<cfcomponent output="false">
+<cfcomponent>
 
-    <cffunction name="init" access="public" output="false" returntype="any">
+    <cffunction name="init" access="public" returntype="any">
 
         <cfscript>
             return this;
@@ -24,7 +24,7 @@ limitations under the License.
 
     </cffunction>
 
-    <cffunction name="build" access="public" output="false" returntype="struct">
+    <cffunction name="build" access="public" returntype="struct">
 
         <cfargument name="issueDataStruct" type="struct" required="yes">
 
@@ -55,7 +55,7 @@ limitations under the License.
             }
 
             returnContent["error"] = messageErrorDetails.build(arguments.issueDataStruct);
-            returnContent["request"] = messageRequestDetails.build(arguments.issueDataStruct);
+            returnContent["request"] = messageRequestDetails.build();
             returnContent["client"] = messageClientDetails.build();
             returnContent["environment"] = messageEnvironmentDetails.build();
 

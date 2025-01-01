@@ -14,7 +14,7 @@ See the License for the specific language governing permissions and
 limitations under the License.
 --->
 
-<cfcomponent output="false">
+<cfcomponent>
 
     <cffunction name="init" access="public" output="false" returntype="any">
 
@@ -24,7 +24,7 @@ limitations under the License.
 
     </cffunction>
 
-    <cffunction name="build" access="public" output="false" returntype="struct">
+    <cffunction name="build" access="public" returntype="struct">
 
         <cfargument name="issueDataStruct" type="struct" required="yes">
 
