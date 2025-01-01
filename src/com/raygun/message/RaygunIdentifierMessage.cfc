@@ -22,36 +22,36 @@ component accessors="true" {
     property name="firstName" type="string" default="";
     property name="uuid" type="string" default="";
 
-    public function init() {
+    public RaygunIdentifierMessage function init() {
         return this;
     }
 
-    public function identifier(string identifier) {
+    public RaygunIdentifierMessage function identifier(string identifier) {
         setIdentifier(identifier);
         return this;
     }
 
-    public function isAnonymous(boolean isAnonymous) {
+    public RaygunIdentifierMessage function isAnonymous(boolean isAnonymous) {
         setIsAnonymous(isAnonymous);
         return this;
     }
 
-    public function email(string email) {
+    public RaygunIdentifierMessage function email(string email) {
         setEmail(email);
         return this;
     }
 
-    public function fullName(string fullName) {
+    public RaygunIdentifierMessage function fullName(string fullName) {
         setFullName(fullName);
         return this;
     }
 
-    public function firstName(string firstName) {
+    public RaygunIdentifierMessage function firstName(string firstName) {
         setFirstName(firstName);
         return this;
     }
 
-    public function uuid(string uuid) {
+    public RaygunIdentifierMessage function uuid(string uuid) {
         setUuid(uuid);
         return this;
     }

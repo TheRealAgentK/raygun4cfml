@@ -21,7 +21,7 @@ component accessors="true" {
         return this;
     }
 
-    public function filter(required array filter) {
+    public RaygunContentFilter function filter(required array filter) {
         setFilter(filter);
         return this;
     }

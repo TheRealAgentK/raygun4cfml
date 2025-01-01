@@ -21,7 +21,7 @@ component accessors="true" {
         return this;
     }
 
-    public function userCustomData(required struct userCustomData) {
+    public RaygunUserCustomData function userCustomData(required struct userCustomData) {
         setUserCustomData(userCustomData);
         return this;
     }
