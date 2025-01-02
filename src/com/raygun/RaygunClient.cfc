@@ -126,7 +126,7 @@ component accessors="true" {
             issueData[ "groupingKey" ] = arguments.groupingKey;
         }
 
-        var message        = new RaygunMessage();
+        var message        = new message.RaygunMessage();
         var messageContent = message.build( issueData.duplicate() );
 
         if (

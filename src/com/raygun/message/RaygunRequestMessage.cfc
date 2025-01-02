@@ -1,21 +1,19 @@
-<!---
-Copyright 2025 Kai Koenig, Ventego Creative Ltd
-
-Licensed under the Apache License, Version 2.0 (the "License");
-you may not use this file except in compliance with the License.
-You may obtain a copy of the License at
-
-   http://www.apache.org/licenses/LICENSE-2.0
-
-Unless required by applicable law or agreed to in writing, software
-distributed under the License is distributed on an "AS IS" BASIS,
-WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
-See the License for the specific language governing permissions and
-limitations under the License.
---->
+/**
+ * Copyright 2025 Kai Koenig, Ventego Creative Ltd
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *    http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
 component accessors="true" {
-
-    property name="rawDataMaxLength" type="numeric" default="4096";
 
     public RaygunRequestMessage function init() {
         return this;
@@ -23,7 +21,7 @@ component accessors="true" {
 
     public struct function build() {
         var returnContent = {};
-        
+
         try {
             var httpRequest = getHttpRequestData();
         } catch (any e) {
@@ -61,7 +59,7 @@ component accessors="true" {
         };
 
         if (localCGI.keyExists("CONTENT_TYPE") && localCGI.keyExists("REQUEST_METHOD") && localCGI.CONTENT_TYPE != "text/html" && localCGI.CONTENT_TYPE != "application/x-www-form-urlencoded" && localCGI.REQUEST_METHOD != "GET") {
-            returnContent["rawData"] = (httpRequest.keyExists("content") ? httpRequest.content : JavaCast("null", "")).left(getRawDataMaxLength());
+            returnContent["rawData"] = (httpRequest.keyExists("content") ? httpRequest.content : JavaCast("null", "")).left(com.raygun.environment.RaygunConstants::RAW_DATA_MAX_LENGTH);
         } else {
             returnContent["rawData"] = JavaCast("null","");
         }
