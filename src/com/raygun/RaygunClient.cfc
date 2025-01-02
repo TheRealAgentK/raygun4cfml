@@ -105,31 +105,31 @@ component accessors="true" {
         RaygunIdentifierMessage user,
         string groupingKey
     ) {
-        var issueData = {};
-        issueData.append( arguments.issueData );
+        var augmentedIssueData = {};
+        augmentedIssueData.append( duplicate( arguments.issueData ) );
 
         if ( !getApiKey().len() ) {
             throw( "API key not set, cannot send message to Raygun" );
         }
 
         if ( getAppVersion().len() ) {
-            issueData[ "appVersion" ] = getAppVersion();
+            augmentedIssueData[ "appVersion" ] = getAppVersion();
         }
 
         if ( arguments.keyExists( "userCustomData" ) ) {
-            issueData[ "userCustomData" ] = arguments.userCustomData;
+            augmentedIssueData[ "userCustomData" ] = arguments.userCustomData;
         }
 
         if ( arguments.keyExists( "tags" ) && isArray( arguments.tags ) ) {
-            issueData[ "tags" ] = arguments.tags;
+            augmentedIssueData[ "tags" ] = arguments.tags;
         }
 
         if ( arguments.keyExists( "user" ) ) {
-            issueData[ "user" ] = arguments.user;
+            augmentedIssueData[ "user" ] = arguments.user;
         }
 
         if ( arguments.keyExists( "groupingKey" ) && arguments.groupingKey.len() ) {
-            issueData[ "groupingKey" ] = arguments.groupingKey;
+            augmentedIssueData[ "groupingKey" ] = arguments.groupingKey;
         }
 
         var message        = new message.RaygunMessage();
@@ -138,7 +138,7 @@ component accessors="true" {
             var raygunSettings = getSettings().getSettings();
         }
         var messageContent = message.build(
-            issueData.duplicate(),
+            augmentedIssueData,
             raygunSettings
         );
 
