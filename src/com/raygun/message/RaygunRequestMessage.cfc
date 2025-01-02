@@ -13,7 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-component accessors="true" {
+component {
 
     public RaygunRequestMessage function init() {
         return this;

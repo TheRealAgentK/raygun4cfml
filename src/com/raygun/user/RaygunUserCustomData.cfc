@@ -15,13 +15,9 @@
  */
 component accessors="true" {
 
-    property name="userCustomData" type="struct" default="{}";
+    property name="userCustomData" type="struct";
 
-    public RaygunUserCustomData function init() {
-        return this;
-    }
-
-    public RaygunUserCustomData function userCustomData( required struct userCustomData ) {
+    public RaygunUserCustomData function init( struct userCustomData = {} ) {
         setUserCustomData( userCustomData );
         return this;
     }

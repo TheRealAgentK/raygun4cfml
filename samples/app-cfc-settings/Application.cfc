@@ -16,19 +16,19 @@ component extends="samples.Application" {
             }
         };
         var customUserData = new com.raygun.user.RaygunUserCustomData()
-            .userCustomData(customUserDataRaw);
+            .setUserCustomData(customUserDataRaw);
 
         var tags = ["onError", "unfiltered", "unhandled exception"];
            
         var userIdentifier = new com.raygun.message.RaygunIdentifierMessage()
-            .identifier("test@test.com")
-            .isAnonymous(false)
-            .uuid("47e432fff11")
-            .firstName("Test")
-            .fullName("Tester");
+            .setIdentifier("test@test.com")
+            .setIsAnonymous(false)
+            .setUuid("47e432fff11")
+            .setFirstName("Test")
+            .setFullName("Tester");
 
         var settings = new com.raygun.environment.RaygunSettings()
-            .rawDataMaxLength( 10000 );
+            .setRawDataMaxLength( 10000 );
 
         var raygun = new com.raygun.RaygunClient(
             apiKey = variables.RAYGUNAPIKEY,

@@ -15,13 +15,9 @@
  */
 component accessors="true" {
 
-    property name="filter" type="array" default="[]";
+    property name="filter" type="array";
 
-    public RaygunContentFilter function init() {
-        return this;
-    }
-
-    public RaygunContentFilter function filter( required array filter ) {
+    public RaygunContentFilter function init( array filter = [] ) {
         setFilter( filter );
         return this;
     }
