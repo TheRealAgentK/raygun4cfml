@@ -33,7 +33,7 @@ component accessors="true" {
         return this;
     }
 
-    public struct function build( required struct issueData ) {
+    public struct function build( required struct issueData, struct settings = {} ) {
         var returnContent = {};
 
         if ( arguments.issueData.keyExists( "groupingKey" ) && arguments.issueData.groupingKey.len() ) {
@@ -53,7 +53,7 @@ component accessors="true" {
         }
 
         returnContent[ "error" ]       = raygunExceptionMessage.build( arguments.issueData );
-        returnContent[ "request" ]     = raygunRequestMessage.build();
+        returnContent[ "request" ]     = raygunRequestMessage.build( arguments.settings );
         returnContent[ "client" ]      = raygunClientMessage.build();
         returnContent[ "environment" ] = raygunEnvironmentMessage.build();
 

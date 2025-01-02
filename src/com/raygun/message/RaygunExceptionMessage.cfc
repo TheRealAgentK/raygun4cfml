@@ -15,7 +15,7 @@
  */
 component accessors="true" {
 
-    public any function init() {
+    public RaygunExceptionMessage function init() {
         return this;
     }
 

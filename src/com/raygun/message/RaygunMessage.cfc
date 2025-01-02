@@ -27,12 +27,12 @@ component accessors="true" {
      *
      * @issueData The struct containing issue data augmented with Raygun-specific data
      */
-    public struct function build( required struct issueData ) {
+    public struct function build( required struct issueData, struct settings = {} ) {
         var returnContent = {};
         var ts            = dateConvert( "local2Utc", now() );
 
         returnContent[ "occurredOn" ] = ts.dateFormat( "yyyy-mm-dd" ) & "T" & ts.timeFormat( "HH:mm:ss" ) & "Z";
-        returnContent[ "details" ]    = raygunMessageDetails.build( arguments.issueData );
+        returnContent[ "details" ]    = raygunMessageDetails.build( arguments.issueData, arguments.settings );
 
         return returnContent;
     }

@@ -19,7 +19,7 @@ component accessors="true" {
         return this;
     }
 
-    public struct function build() {
+    public struct function build( struct settings = {} ) {
         var returnContent = {};
 
         try {
@@ -63,9 +63,7 @@ component accessors="true" {
         if (
             localCGI.keyExists( "CONTENT_TYPE" ) && localCGI.keyExists( "REQUEST_METHOD" ) && localCGI.CONTENT_TYPE != "text/html" && localCGI.CONTENT_TYPE != "application/x-www-form-urlencoded" && localCGI.REQUEST_METHOD != "GET"
         ) {
-            returnContent[ "rawData" ] = ( httpRequest.keyExists( "content" ) ? httpRequest.content : javacast( "null", "" ) ).left(
-                com.raygun.environment.RaygunConstants::RAW_DATA_MAX_LENGTH
-            );
+            returnContent[ "rawData" ] = ( httpRequest.keyExists( "content" ) ? httpRequest.content : javacast( "null", "" ) ).left(( arguments.settings.keyExists( "rawDataMaxLength" ) ? arguments.settings.rawDataMaxLength : com.raygun.environment.RaygunConfig::RAW_DATA_MAX_LENGTH_DEFAULT ));
         } else {
             returnContent[ "rawData" ] = javacast( "null", "" );
         }

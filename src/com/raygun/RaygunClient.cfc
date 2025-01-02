@@ -18,11 +18,13 @@ component accessors="true" {
     property name="apiKey"        type="string"              default="";
     property name="contentFilter" type="RaygunContentFilter" default="";
     property name="appVersion"    type="string"              default="";
+    property name="settings"      type="RaygunSettings"      default="";
 
-    public any function init(
+    public RaygunClient function init(
         required string apiKey,
         RaygunContentFilter contentFilter,
-        string appVersion
+        string appVersion,
+        RaygunSettings settings
     ) {
         setApiKey( arguments.apiKey );
 
@@ -32,6 +34,10 @@ component accessors="true" {
 
         if ( arguments.keyExists( "appVersion" ) ) {
             setAppVersion( arguments.appVersion );
+        }
+
+        if ( arguments.keyExists( "settings" ) ) {
+            setSettings( arguments.settings );
         }
 
         return this;
@@ -103,7 +109,7 @@ component accessors="true" {
         issueData.append( arguments.issueData );
 
         if ( !getApiKey().len() ) {
-            throw( "API integration not set, cannot send message to Raygun" );
+            throw( "API key not set, cannot send message to Raygun" );
         }
 
         if ( getAppVersion().len() ) {
@@ -127,8 +133,12 @@ component accessors="true" {
         }
 
         var message        = new message.RaygunMessage();
-        var messageContent = message.build( issueData.duplicate() );
-
+        var raygunSettings = {};
+        if ( isInstanceOf( getSettings(), "RaygunSettings" ) ) {
+            var raygunSettings = getSettings().getSettings();
+        }
+        var messageContent = message.build( issueData.duplicate(), raygunSettings );
+        
         if (
             isInstanceOf(
                 getContentFilter(),
