@@ -82,9 +82,9 @@ component {
             }
         }
 
-        arrayLen( tagContextData ) ? returnContent[ "data" ][ "tagContext" ] = tagContextData : "";
-        entryPoint.keyExists( "errorcode" ) && len( entryPoint.errorcode ) && entryPoint.errorcode != 0 ? returnContent[ "data" ][ "errorCode" ] = entryPoint.errorcode : "";
-        entryPoint.keyExists( "extendedinfo" ) && entryPoint.extendedinfo.len() ? returnContent[ "data" ][ "extendedInfo" ] = entryPoint.extendedinfo : "";
+        returnContent[ "data" ][ "tagContext" ] = ( arrayLen( tagContextData ) ? tagContextData : "" );
+        returnContent[ "data" ][ "errorCode" ] = ( entryPoint.keyExists( "errorcode" ) && len( entryPoint.errorcode ) && entryPoint.errorcode != 0 ) ? entryPoint.errorcode : "";
+        returnContent[ "data" ][ "extendedInfo" ] = ( entryPoint.keyExists( "extendedinfo" ) && entryPoint.extendedinfo.len() ) ? entryPoint.extendedinfo : "";
 
         returnContent[ "stackTrace" ] = stackTraceData;
         returnContent[ "message" ]    = entryPoint.message;
@@ -110,11 +110,11 @@ component {
             if ( !returnContent[ "message" ].len() ) returnContent[ "message" ] = "SQL/DB issue";
 
             var databaseData = {};
-            entryPoint.keyExists( "detail" ) && entryPoint.detail.len() ? databaseData[ "detail" ] = entryPoint.detail : "";
-            entryPoint.keyExists( "sql" ) && entryPoint.sql.len() ? databaseData[ "sql" ] = entryPoint.sql : "";
-            entryPoint.keyExists( "queryError" ) && entryPoint.queryError.len() ? databaseData[ "queryError" ] = entryPoint.queryError : "";
-            entryPoint.keyExists( "nativeErrorCode" ) && len( entryPoint.nativeErrorCode ) ? databaseData[ "nativeErrorCode" ] = entryPoint.nativeErrorCode : "";
-            entryPoint.keyExists( "SQLState" ) && entryPoint.SQLState.len() ? databaseData[ "SQLState" ] = entryPoint.SQLState : "";
+            returnContent[ "data" ][ "database" ][ "detail" ] = ( entryPoint.keyExists( "detail" ) && entryPoint.detail.len() ) ? entryPoint.detail : "";
+            returnContent[ "data" ][ "database" ][ "sql" ] = ( entryPoint.keyExists( "sql" ) && entryPoint.sql.len() ) ? entryPoint.sql : "";
+            returnContent[ "data" ][ "database" ][ "queryError" ] = ( entryPoint.keyExists( "queryError" ) && entryPoint.queryError.len() ) ? entryPoint.queryError : "";
+            returnContent[ "data" ][ "database" ][ "nativeErrorCode" ] = ( entryPoint.keyExists( "nativeErrorCode" ) && len( entryPoint.nativeErrorCode ) ) ? entryPoint.nativeErrorCode : "";
+            returnContent[ "data" ][ "database" ][ "SQLState" ] = ( entryPoint.keyExists( "SQLState" ) && entryPoint.SQLState.len() ) ? entryPoint.SQLState : "";
             returnContent[ "data" ][ "database" ] = databaseData;
         }
         dump( returnContent )
