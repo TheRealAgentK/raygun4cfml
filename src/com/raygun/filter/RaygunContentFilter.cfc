@@ -21,17 +21,15 @@ component accessors="true" {
         return this;
     }
 
-    public RaygunContentFilter function filter(required array filter) {
-        setFilter(filter);
+    public RaygunContentFilter function filter( required array filter ) {
+        setFilter( filter );
         return this;
     }
 
     /**
      * Apply content filtering
      */
-    public struct function apply(
-        required struct messageData
-    ) {
+    public struct function apply( required struct messageData ) {
         var filter = getFilter();
 
         for ( var matcher in filter ) {
@@ -40,7 +38,7 @@ component accessors="true" {
             // loop over general found keys and replace
             for ( var element in findKeysByFilter ) {
                 // generally we only want to replace simple values, not structs or arrays, as the replacement value is a string.
-                if ( isSimpleValue(element.value) ) {
+                if ( isSimpleValue( element.value ) ) {
                     element.owner[ matcher.filter ] = matcher.replacement;
                 }
             }
@@ -60,4 +58,5 @@ component accessors="true" {
 
         return arguments.messageData;
     }
+
 }

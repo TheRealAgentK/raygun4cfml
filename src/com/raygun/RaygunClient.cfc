@@ -135,7 +135,7 @@ component accessors="true" {
                 "RaygunContentFilter"
             )
         ) {
-            messageContent = getContentFilter().apply(messageContent);
+            messageContent = getContentFilter().apply( messageContent );
         }
 
         var jsonData = messageContent.toJSON();
@@ -224,4 +224,5 @@ component accessors="true" {
 
         return postResult;
     }
+
 }

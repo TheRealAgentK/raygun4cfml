@@ -19,8 +19,8 @@ component accessors="true" {
         return this;
     }
 
-    public struct function build(required struct issueData) {
-        var returnContent = {};
+    public struct function build( required struct issueData ) {
+        var returnContent  = {};
         var tagContextData = [];
         var stackTraceData = [];
         // var isLucee = new RaygunInternalTools().isLucee();
@@ -28,62 +28,67 @@ component accessors="true" {
 
         var entryPoint = arguments.issueData;
 
-dump(issueData);
-        if (entryPoint.keyExists("Cause") && entryPoint.cause.keyExists("CatchBlock")) {
+        dump( issueData );
+        if ( entryPoint.keyExists( "Cause" ) && entryPoint.cause.keyExists( "CatchBlock" ) ) {
             entryPoint = entryPoint.cause.CatchBlock;
         }
 
-        if (isArray(entryPoint.stacktrace)) {
+        if ( isArray( entryPoint.stacktrace ) ) {
             var stackTraceData = entryPoint.stacktrace;
-        } else if (isSimpleValue(entryPoint.stacktrace)) {
+        } else if ( isSimpleValue( entryPoint.stacktrace ) ) {
             // This is typically the case for Lucee's Java-like stack traces
-            var stackTraceLines = entryPoint.stacktrace.split("\sat");
-dump(stackTraceLines);
+            var stackTraceLines = entryPoint.stacktrace.split( "\sat" );
+            dump( stackTraceLines );
 
-            for (var j = 2; j <= arrayLen(stackTraceLines); j++) {
+            for ( var j = 2; j <= arrayLen( stackTraceLines ); j++ ) {
                 // This split leaves the package path and function name in the first element
                 // and the file name and line number in the second element
-                var stackTraceLineElements = stackTraceLines[j].split("\(");
-dump(stackTraceLineElements);
-                if (arrayLen(stackTraceLineElements) == 2) {
-                    var stackTraceLineElement = {};
-                    stackTraceLineElement["methodName"] = trim(stackTraceLineElements[1].listLast("."));
-                    stackTraceLineElement["className"] = stackTraceLineElements[1].listDeleteAt(stackTraceLineElements[1].listLen("."), ".").trim();
-                    
+                var stackTraceLineElements = stackTraceLines[ j ].split( "\(" );
+                dump( stackTraceLineElements );
+                if ( arrayLen( stackTraceLineElements ) == 2 ) {
+                    var stackTraceLineElement             = {};
+                    stackTraceLineElement[ "methodName" ] = trim( stackTraceLineElements[ 1 ].listLast( "." ) );
+                    stackTraceLineElement[ "className" ]  = stackTraceLineElements[ 1 ]
+                        .listDeleteAt(
+                            stackTraceLineElements[ 1 ].listLen( "." ),
+                            "."
+                        )
+                        .trim();
+
                     // There are Java stack traces without line numbers. Check if a line number is present.
                     // We look for a colon followed by digits. If there is no line number, return Null so it's clear that none was given.
-                    if (stackTraceLineElements[2].reFindNoCase("\:(?!\D+)")) {
-                        var parts = stackTraceLineElements[2].split("\:(?!\D+)");
-                        stackTraceLineElement["fileName"] = parts[1].reReplace("[\)\n\r]", "").trim();
-                        stackTraceLineElement["lineNumber"] = parts[2].reReplace("[\)\n\r]", "").trim();
+                    if ( stackTraceLineElements[ 2 ].reFindNoCase( "\:(?!\D+)" ) ) {
+                        var parts                             = stackTraceLineElements[ 2 ].split( "\:(?!\D+)" );
+                        stackTraceLineElement[ "fileName" ]   = parts[ 1 ].reReplace( "[\)\n\r]", "" ).trim();
+                        stackTraceLineElement[ "lineNumber" ] = parts[ 2 ].reReplace( "[\)\n\r]", "" ).trim();
                     } else {
-                        stackTraceLineElement["fileName"] = stackTraceLineElements[2].reReplace("[\)\n\r]", "").trim();
-                        stackTraceLineElement["lineNumber"] = JavaCast("null", "");
+                        stackTraceLineElement[ "fileName" ]   = stackTraceLineElements[ 2 ].reReplace( "[\)\n\r]", "" ).trim();
+                        stackTraceLineElement[ "lineNumber" ] = javacast( "null", "" );
                     }
 
-                    stackTraceData.append(stackTraceLineElement);
+                    stackTraceData.append( stackTraceLineElement );
                 }
             }
         }
 
-        if (entryPoint.keyExists("tagcontext")) {
-            for (j = 1; j <= entryPoint.tagcontext.len(); j++) {
-                tagContextData[j] = {
-                    "code": chr(13) & "      " &entryPoint.tagcontext[j]["codePrintPlain"].trim(),
-                    "className": entryPoint.tagcontext[j]["id"].trim(),
-                    "fileName": entryPoint.tagcontext[j]["template"].trim(),
-                    "lineNumber": trim(entryPoint.tagcontext[j]["line"])
+        if ( entryPoint.keyExists( "tagcontext" ) ) {
+            for ( j = 1; j <= entryPoint.tagcontext.len(); j++ ) {
+                tagContextData[ j ] = {
+                    "code"       : chr( 13 ) & "      " & entryPoint.tagcontext[ j ][ "codePrintPlain" ].trim(),
+                    "className"  : entryPoint.tagcontext[ j ][ "id" ].trim(),
+                    "fileName"   : entryPoint.tagcontext[ j ][ "template" ].trim(),
+                    "lineNumber" : trim( entryPoint.tagcontext[ j ][ "line" ] )
                 };
             }
         }
 
-        arrayLen(tagContextData) ? returnContent["data"]["tagContext"] = tagContextData : "";
-        entryPoint.keyExists("errorcode") && len(entryPoint.errorcode) && entryPoint.errorcode != 0 ? returnContent["data"]["errorCode"] = entryPoint.errorcode : "";
-        entryPoint.keyExists("extendedinfo") && entryPoint.extendedinfo.len() ? returnContent["data"]["extendedInfo"] = entryPoint.extendedinfo : "";
+        arrayLen( tagContextData ) ? returnContent[ "data" ][ "tagContext" ] = tagContextData : "";
+        entryPoint.keyExists( "errorcode" ) && len( entryPoint.errorcode ) && entryPoint.errorcode != 0 ? returnContent[ "data" ][ "errorCode" ] = entryPoint.errorcode : "";
+        entryPoint.keyExists( "extendedinfo" ) && entryPoint.extendedinfo.len() ? returnContent[ "data" ][ "extendedInfo" ] = entryPoint.extendedinfo : "";
 
-        returnContent["stackTrace"] = stackTraceData;
-        returnContent["message"] = entryPoint.message;
-        returnContent["className"] = entryPoint.type.trim();
+        returnContent[ "stackTrace" ] = stackTraceData;
+        returnContent[ "message" ]    = entryPoint.message;
+        returnContent[ "className" ]  = entryPoint.type.trim();
 
         // // If there is a root cause, we can use it to get the type and message
         // if (entryPoint.keyExists("RootCause")) {
@@ -101,19 +106,18 @@ dump(stackTraceLineElements);
         //     returnContent["message"] = entryPoint.message;
         // }
 
-        if (entryPoint.type == "database") {
-            if (!returnContent["message"].len())
-                returnContent["message"] = "SQL/DB issue";
-            
+        if ( entryPoint.type == "database" ) {
+            if ( !returnContent[ "message" ].len() ) returnContent[ "message" ] = "SQL/DB issue";
+
             var databaseData = {};
-            entryPoint.keyExists("detail") && entryPoint.detail.len() ? databaseData["detail"] = entryPoint.detail : "";
-            entryPoint.keyExists("sql") && entryPoint.sql.len() ? databaseData["sql"] = entryPoint.sql : "";
-            entryPoint.keyExists("queryError") && entryPoint.queryError.len() ? databaseData["queryError"] = entryPoint.queryError : "";
-            entryPoint.keyExists("nativeErrorCode") && len(entryPoint.nativeErrorCode) ? databaseData["nativeErrorCode"] = entryPoint.nativeErrorCode : "";
-            entryPoint.keyExists("SQLState") && entryPoint.SQLState.len() ? databaseData["SQLState"] = entryPoint.SQLState : "";
-            returnContent["data"]["database"] = databaseData;      
+            entryPoint.keyExists( "detail" ) && entryPoint.detail.len() ? databaseData[ "detail" ] = entryPoint.detail : "";
+            entryPoint.keyExists( "sql" ) && entryPoint.sql.len() ? databaseData[ "sql" ] = entryPoint.sql : "";
+            entryPoint.keyExists( "queryError" ) && entryPoint.queryError.len() ? databaseData[ "queryError" ] = entryPoint.queryError : "";
+            entryPoint.keyExists( "nativeErrorCode" ) && len( entryPoint.nativeErrorCode ) ? databaseData[ "nativeErrorCode" ] = entryPoint.nativeErrorCode : "";
+            entryPoint.keyExists( "SQLState" ) && entryPoint.SQLState.len() ? databaseData[ "SQLState" ] = entryPoint.SQLState : "";
+            returnContent[ "data" ][ "database" ] = databaseData;
         }
-dump(returnContent)
+        dump( returnContent )
         return returnContent;
     }
 

@@ -21,11 +21,12 @@ component {
 
     public struct function build() {
         var returnContent = {
-            "name" = com.raygun.environment.RaygunConstants::RAYGUN_CLIENT_NAME,
-            "version" = com.raygun.environment.RaygunConstants::RAYGUN_CLIENT_VERSION,
-            "clientUrl" = com.raygun.environment.RaygunConstants::RAYGUN_CLIENT_URL
+            "name"      : com.raygun.environment.RaygunConstants::RAYGUN_CLIENT_NAME,
+            "version"   : com.raygun.environment.RaygunConstants::RAYGUN_CLIENT_VERSION,
+            "clientUrl" : com.raygun.environment.RaygunConstants::RAYGUN_CLIENT_URL
         };
 
         return returnContent;
     }
+
 }
