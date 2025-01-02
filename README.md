@@ -8,7 +8,7 @@ Supported:
 Adobe CF 2018+
 Lucee 5+
 
-Current Version: 1.7.0 (November 14 2024)
+Current Version: 2.0.0-alpha
 
 Dependencies: 
 
