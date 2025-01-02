@@ -26,23 +26,28 @@ component extends="testbox.system.BaseSpec" {
             } );
 
             it( "should fail if incorrect data type array is provided", () => {
-                expect( () => raygunUserCustomData.userCustomData( [ { "test" : "test" } ] ).build() ).toThrow();
+                expect( () => raygunUserCustomData.setUserCustomData( [ { "test" : "test" } ] ).build() ).toThrow();
             } );
 
             it( "should fail if incorrect data type string is provided", () => {
-                expect( () => raygunUserCustomData.userCustomData( "My Data" ).build() ).toThrow();
+                expect( () => raygunUserCustomData.setUserCustomData( "My Data" ).build() ).toThrow();
             } );
 
             it( "should not fail if correct data type struct is provided", () => {
-                expect( () => raygunUserCustomData.userCustomData( { "test" : "test" } ).build() ).notToThrow();
+                expect( () => raygunUserCustomData.setUserCustomData( { "test" : "test" } ).build() ).notToThrow();
             } );
 
             it( "should return the correct data", () => {
-                expect( raygunUserCustomData.userCustomData( { "test" : "test" } ).build() ).toBe( { "test" : "test" } );
+                expect( raygunUserCustomData.setUserCustomData( { "test" : "test" } ).build() ).toBe( { "test" : "test" } );
+            } );
+
+            it( "should create an empty struct on .build() without data", () => {
+                expect( raygunUserCustomData.build() ).toBe( {} );
             } );
         } );
     }
 
 }
+
 
 
