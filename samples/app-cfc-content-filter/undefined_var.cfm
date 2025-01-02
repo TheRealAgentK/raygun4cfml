@@ -13,7 +13,6 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 --->
-
 <cfscript>
     //  Create some fake values in the form and url scopes to test the content filter
     form["age"] = 38;

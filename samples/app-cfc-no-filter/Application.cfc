@@ -27,7 +27,7 @@ component extends="samples.Application" {
             .firstName("Test")
             .fullName("Tester");
 
-        var raygun = new "nz.co.ventego-creative.raygun4cfml.RaygunClient"(
+        var raygun = new com.raygun.RaygunClient(
             apiKey = variables.RAYGUNAPIKEY,
             appVersion = "4.3.6"
         );

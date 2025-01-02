@@ -1,7 +1,6 @@
 component {
 
     this.mappings = {
-        "/nz" = expandPath("/src/nz"),
         "/com" = expandPath("/src/com")
     };
 

@@ -30,8 +30,8 @@ component extends="samples.Application" {
         var filterRaw = [{filter = "password", replacement = "__password__"}, {filter = "creditcard", replacement = "__ccnumber__"}];
         var contentFilter = new com.raygun.filter.RaygunContentFilter()
             .filter(filterRaw);
-            
-        var raygun = new "nz.co.ventego-creative.raygun4cfml.RaygunClient"(
+
+        var raygun = new com.raygun.RaygunClient(
             apiKey = variables.RAYGUNAPIKEY,
             appVersion = "4.3.6",
             contentFilter = contentFilter
