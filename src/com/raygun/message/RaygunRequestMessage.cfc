@@ -63,11 +63,8 @@ component {
         if (
             localCGI.keyExists( "CONTENT_TYPE" ) && localCGI.keyExists( "REQUEST_METHOD" ) && localCGI.CONTENT_TYPE != "text/html" && localCGI.CONTENT_TYPE != "application/x-www-form-urlencoded" && localCGI.REQUEST_METHOD != "GET"
         ) {
-            returnContent[ "rawData" ] = ( httpRequest.keyExists( "content" ) ? httpRequest.content : javacast( "null", "" ) ).left(
-                (
-                    arguments.settings.keyExists( "rawDataMaxLength" ) ? arguments.settings.rawDataMaxLength : com.raygun.environment.RaygunConfig::RAW_DATA_MAX_LENGTH_DEFAULT
-                )
-            );
+            var maxLength = ( arguments.settings.keyExists( "rawDataMaxLength" ) ? arguments.settings.rawDataMaxLength : com.raygun.environment.RaygunConfig::RAW_DATA_MAX_LENGTH_DEFAULT );
+            returnContent[ "rawData" ] = Left( ( httpRequest.keyExists( "content" ) ) ? httpRequest.content : javacast( "null", "" ), maxLength );
         } else {
             returnContent[ "rawData" ] = javacast( "null", "" );
         }

@@ -28,7 +28,7 @@ component {
 
         var entryPoint = arguments.issueData;
 
-        dump( issueData );
+        writeDump( issueData );
         if ( entryPoint.keyExists( "Cause" ) && entryPoint.cause.keyExists( "CatchBlock" ) ) {
             entryPoint = entryPoint.cause.CatchBlock;
         }
@@ -38,16 +38,16 @@ component {
         } else if ( isSimpleValue( entryPoint.stacktrace ) ) {
             // This is typically the case for Lucee's Java-like stack traces
             var stackTraceLines = entryPoint.stacktrace.split( "\sat" );
-            dump( stackTraceLines );
+            writeDump( stackTraceLines );
 
             for ( var j = 2; j <= arrayLen( stackTraceLines ); j++ ) {
                 // This split leaves the package path and function name in the first element
                 // and the file name and line number in the second element
                 var stackTraceLineElements = stackTraceLines[ j ].split( "\(" );
-                dump( stackTraceLineElements );
+                writeDump( stackTraceLineElements );
                 if ( arrayLen( stackTraceLineElements ) == 2 ) {
                     var stackTraceLineElement             = {};
-                    stackTraceLineElement[ "methodName" ] = trim( stackTraceLineElements[ 1 ].listLast( "." ) );
+                    stackTraceLineElement[ "methodName" ] = trim( stackTraceLineElements[ 1 ] ).listLast( "." );
                     stackTraceLineElement[ "className" ]  = stackTraceLineElements[ 1 ]
                         .listDeleteAt(
                             stackTraceLineElements[ 1 ].listLen( "." ),
@@ -71,10 +71,22 @@ component {
             }
         }
 
+        // LUCEE 5
+        // if ( entryPoint.keyExists( "tagcontext" ) ) {
+        //     for ( j = 1; j <= entryPoint.tagcontext.len(); j++ ) {
+        //         tagContextData[ j ] = {
+        //             "code"       : chr( 13 ) & "      " & entryPoint.tagcontext[ j ][ "codePrintPlain" ].trim(),
+        //             "className"  : entryPoint.tagcontext[ j ][ "id" ].trim(),
+        //             "fileName"   : entryPoint.tagcontext[ j ][ "template" ].trim(),
+        //             "lineNumber" : trim( entryPoint.tagcontext[ j ][ "line" ] )
+        //         };
+        //     }
+        // }
+
+        // Adobe ColdFusion 2021
         if ( entryPoint.keyExists( "tagcontext" ) ) {
             for ( j = 1; j <= entryPoint.tagcontext.len(); j++ ) {
                 tagContextData[ j ] = {
-                    "code"       : chr( 13 ) & "      " & entryPoint.tagcontext[ j ][ "codePrintPlain" ].trim(),
                     "className"  : entryPoint.tagcontext[ j ][ "id" ].trim(),
                     "fileName"   : entryPoint.tagcontext[ j ][ "template" ].trim(),
                     "lineNumber" : trim( entryPoint.tagcontext[ j ][ "line" ] )
@@ -117,7 +129,7 @@ component {
             returnContent[ "data" ][ "database" ][ "SQLState" ] = ( entryPoint.keyExists( "SQLState" ) && entryPoint.SQLState.len() ) ? entryPoint.SQLState : "";
             returnContent[ "data" ][ "database" ] = databaseData;
         }
-        dump( returnContent )
+        writeDump( returnContent )
         return returnContent;
     }
 
