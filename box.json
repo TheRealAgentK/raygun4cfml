@@ -46,9 +46,9 @@
         "testbox":"6"
     },
     "scripts":{
-        "format":"cfformat run src/**/*.cfc,tests/**/*.cfc --overwrite",
-        "format:watch":"cfformat watch src/**/*.cfc,tests/**/*.cfc --overwrite",
-        "format:check":"cfformat check src/**/*.cfc,tests/**/*.cfc"
+        "format":"cfformat run src/**/*.cfc,tests/**/*.cfc,tests/**/*.cfm --overwrite",
+        "format:watch":"cfformat watch src/**/*.cfc,tests/**/*.cfc,tests/**/*.cfm --overwrite",
+        "format:check":"cfformat check src/**/*.cfc,tests/**/*.cfc,tests/**/*.cfm"
     },
     "installPaths":{
         "testbox":"testbox/"

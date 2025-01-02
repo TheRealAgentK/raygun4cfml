@@ -22,7 +22,14 @@ component accessors="true" {
     property name="firstName"   type="string"  default="";
     property name="uuid"        type="string"  default="";
 
-    public RaygunIdentifierMessage function init( string identifier = "", boolean isAnonymous = true, string email = "", string fullName = "", string firstName = "", string uuid = "" ) {
+    public RaygunIdentifierMessage function init(
+        string identifier   = "",
+        boolean isAnonymous = true,
+        string email        = "",
+        string fullName     = "",
+        string firstName    = "",
+        string uuid         = ""
+    ) {
         setIdentifier( identifier );
         setIsAnonymous( isAnonymous );
         setEmail( email );

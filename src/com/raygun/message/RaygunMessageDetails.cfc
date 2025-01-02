@@ -33,7 +33,10 @@ component accessors="true" {
         return this;
     }
 
-    public struct function build( required struct issueData, struct settings = {} ) {
+    public struct function build(
+        required struct issueData,
+        struct settings = {}
+    ) {
         var returnContent = {};
 
         if ( arguments.issueData.keyExists( "groupingKey" ) && arguments.issueData.groupingKey.len() ) {

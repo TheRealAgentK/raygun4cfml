@@ -137,8 +137,11 @@ component accessors="true" {
         if ( isInstanceOf( getSettings(), "RaygunSettings" ) ) {
             var raygunSettings = getSettings().getSettings();
         }
-        var messageContent = message.build( issueData.duplicate(), raygunSettings );
-        
+        var messageContent = message.build(
+            issueData.duplicate(),
+            raygunSettings
+        );
+
         if (
             isInstanceOf(
                 getContentFilter(),

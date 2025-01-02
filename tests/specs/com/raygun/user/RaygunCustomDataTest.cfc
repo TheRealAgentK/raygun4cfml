@@ -16,39 +16,33 @@
 component extends="testbox.system.BaseSpec" {
 
     function run() {
-        describe("RaygunUserCustomData", () => {
-            
+        describe( "RaygunUserCustomData", () => {
             beforeEach( () => {
                 variables.raygunUserCustomData = new com.raygun.user.RaygunUserCustomData();
             } );
 
-            it("should be a component", () => {
-                expect(raygunUserCustomData).toBeComponent();
-            });
+            it( "should be a component", () => {
+                expect( raygunUserCustomData ).toBeComponent();
+            } );
 
-            it("should fail if incorrect data type array is provided", () => {
-                expect( () => raygunUserCustomData
-                                .userCustomData( [{ "test" = "test" }] )
-                                .build() ).toThrow();
-            });
+            it( "should fail if incorrect data type array is provided", () => {
+                expect( () => raygunUserCustomData.userCustomData( [ { "test" : "test" } ] ).build() ).toThrow();
+            } );
 
-            it("should fail if incorrect data type string is provided", () => {
-                expect( () => raygunUserCustomData
-                                .userCustomData( "My Data" )
-                                .build() ).toThrow();
-            });
+            it( "should fail if incorrect data type string is provided", () => {
+                expect( () => raygunUserCustomData.userCustomData( "My Data" ).build() ).toThrow();
+            } );
 
-            it("should not fail if correct data type struct is provided", () => {
-                expect( () => raygunUserCustomData
-                                .userCustomData( { "test" = "test" } )
-                                .build() ).notToThrow();
-            });
+            it( "should not fail if correct data type struct is provided", () => {
+                expect( () => raygunUserCustomData.userCustomData( { "test" : "test" } ).build() ).notToThrow();
+            } );
 
-            it("should return the correct data", () => {
-                expect( raygunUserCustomData.userCustomData( { "test" = "test" } ).build() ).toBe( { "test" = "test" } );
-            });
-        });
+            it( "should return the correct data", () => {
+                expect( raygunUserCustomData.userCustomData( { "test" : "test" } ).build() ).toBe( { "test" : "test" } );
+            } );
+        } );
     }
+
 }
 
 
