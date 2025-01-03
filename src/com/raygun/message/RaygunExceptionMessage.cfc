@@ -14,8 +14,8 @@ component {
         var entryPoint = arguments.issueData;
 
         writeDump( issueData );
-        if ( entryPoint.keyExists( "Cause" ) && entryPoint.cause.keyExists( "CatchBlock" ) ) {
-            entryPoint = entryPoint.cause.CatchBlock;
+        if ( entryPoint.keyExists( "Cause" ) ) {
+            returnContent["innerError"] = build(duplicate(entryPoint.Cause));
         }
 
         if ( isArray( entryPoint.stacktrace ) ) {
@@ -89,22 +89,6 @@ component {
         returnContent[ "stackTrace" ] = stackTraceData;
         returnContent[ "message" ]    = entryPoint.message;
         returnContent[ "className" ]  = entryPoint.type.trim();
-
-        // // If there is a root cause, we can use it to get the type and message
-        // if (entryPoint.keyExists("RootCause")) {
-        //     if (entryPoint["RootCause"].keyExists("Type") && entryPoint["RootCause"]["Type"] == "expression") {
-        //         returnContent["data"]["type"] = entryPoint["RootCause"]["Type"];
-        //     }
-        //     if (entryPoint["RootCause"].keyExists("Message")) {
-        //         returnContent["message"] = entryPoint["RootCause"]["Message"];
-        //     }
-        // } else {
-        //     // otherwise there's no root cause and the specific data has to be grabbed from somewhere else
-        //     if (!isLucee || isACF2021) {
-        //         returnContent["data"]["type"] = entryPoint.type;
-        //     }
-        //     returnContent["message"] = entryPoint.message;
-        // }
 
         if ( entryPoint.type == "database" ) {
             if ( !returnContent[ "message" ].len() ) returnContent[ "message" ] = "SQL/DB issue";
