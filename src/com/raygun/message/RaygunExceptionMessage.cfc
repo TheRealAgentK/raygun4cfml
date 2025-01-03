@@ -8,13 +8,9 @@ component {
         var returnContent  = {};
         var tagContextData = [];
         var stackTraceData = [];
-        var isLucee = com.raygun.tools.RaygunInternalTools::isLucee();
-        var isACF2021 = com.raygun.tools.RaygunInternalTools::isACF2021();
-        var isACF2023 = com.raygun.tools.RaygunInternalTools::isACF2023();
-
+        
         var entryPoint = arguments.issueData;
 
-        writeDump( issueData );
         if ( entryPoint.keyExists( "Cause" ) ) {
             returnContent["innerError"] = build(duplicate(entryPoint.Cause));
         }
@@ -24,13 +20,11 @@ component {
         } else if ( isSimpleValue( entryPoint.stacktrace ) ) {
             // This is typically the case for Lucee's Java-like stack traces
             var stackTraceLines = entryPoint.stacktrace.split( "\sat" );
-            writeDump( stackTraceLines );
 
             for ( var j = 2; j <= arrayLen( stackTraceLines ); j++ ) {
                 // This split leaves the package path and function name in the first element
                 // and the file name and line number in the second element
                 var stackTraceLineElements = stackTraceLines[ j ].split( "\(" );
-                writeDump( stackTraceLineElements );
                 if ( arrayLen( stackTraceLineElements ) == 2 ) {
                     var stackTraceLineElement             = {};
                     stackTraceLineElement[ "methodName" ] = trim( stackTraceLineElements[ 1 ] ).listLast( "." );
@@ -57,9 +51,9 @@ component {
             }
         }
 
-        // TagContext is different between Lucee and ACF
-        if (isLucee) {
-            // Lucee
+        // TagContext is different between Lucee / Boxlang and ACF
+        if (com.raygun.tools.RaygunInternalTools::isLucee() || com.raygun.tools.RaygunInternalTools::isBoxlang()) {
+            // Lucee / Boxlang
             if ( entryPoint.keyExists( "tagcontext" ) ) {
                 for ( j = 1; j <= entryPoint.tagcontext.len(); j++ ) {
                     tagContextData[ j ] = {
@@ -70,8 +64,8 @@ component {
                     };
                 }
             }
-        } else if (isACF2021) {
-            // ACF 2021
+        } else if (com.raygun.tools.RaygunInternalTools::isACF2021() || com.raygun.tools.RaygunInternalTools::isACF2023()) {
+            // ACF 2021/2023
             if ( entryPoint.keyExists( "tagcontext" ) ) {
                 for ( j = 1; j <= entryPoint.tagcontext.len(); j++ ) {
                     tagContextData[ j ] = {
@@ -102,7 +96,6 @@ component {
             returnContent[ "data" ][ "database" ][ "SQLState" ] = ( entryPoint.keyExists( "SQLState" ) && entryPoint.SQLState.len() ) ? entryPoint.SQLState : "";
             returnContent[ "data" ][ "database" ] = databaseData;
         }
-        writeDump( returnContent )
         return returnContent;
     }
 
