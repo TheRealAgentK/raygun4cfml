@@ -10,6 +10,7 @@ component {
         var stackTraceData = [];
         var isLucee = com.raygun.tools.RaygunInternalTools::isLucee();
         var isACF2021 = com.raygun.tools.RaygunInternalTools::isACF2021();
+        var isACF2023 = com.raygun.tools.RaygunInternalTools::isACF2023();
 
         var entryPoint = arguments.issueData;
 
