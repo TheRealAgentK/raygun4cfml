@@ -6,7 +6,6 @@ component {
 
     public static function getServerProductInfo() {
         var cfProductName = static.serverScope.ColdFusion.ProductName;
-        writedump(static.serverScope);
 
         if (cfProductName.contains("Lucee")) {
             return {
