@@ -1,0 +1,35 @@
+component {
+
+    static {
+        serverScope = duplicate( server );
+    }
+
+    public static function getServerProductInfo() {
+        var cfProductName = static.serverScope.ColdFusion.ProductName;
+
+        if (cfProductName.contains("Railo")) {
+            return {
+                "cfServer": "Railo",
+                "serverVersion": static.serverScope.railo.version.listFirst()
+            };
+        } else if (cfProductName.contains("Lucee")) {
+            return {
+                "cfServer": "Lucee",
+                "serverVersion": static.serverScope.lucee.version.listFirst()
+            };
+        } else if (cfProductName.contains("ColdFusion")) {
+            return {
+                "cfServer": "ACF",
+                "serverVersion": static.serverScope.coldfusion.productversion,
+                "serverMainVersion": static.serverScope.coldfusion.productversion.listFirst(),
+                "productLevel": static.serverScope.coldfusion.productlevel
+            };
+        } else {
+            return {
+                "cfServer": "",
+                "serverVersion": ""
+            };
+        }
+    }
+
+}

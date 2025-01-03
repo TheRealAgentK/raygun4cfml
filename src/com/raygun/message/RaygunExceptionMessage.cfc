@@ -8,8 +8,8 @@ component {
         var returnContent  = {};
         var tagContextData = [];
         var stackTraceData = [];
-        // var isLucee = new RaygunInternalTools().isLucee();
-        // var isACF2021 = new RaygunInternalTools().isACF2021();
+        var isLucee = com.raygun.tools.RaygunInternalTools::isLucee();
+        var isACF2021 = com.raygun.tools.RaygunInternalTools::isACF2021();
 
         var entryPoint = arguments.issueData;
 
@@ -56,26 +56,29 @@ component {
             }
         }
 
-        // LUCEE 5
-        // if ( entryPoint.keyExists( "tagcontext" ) ) {
-        //     for ( j = 1; j <= entryPoint.tagcontext.len(); j++ ) {
-        //         tagContextData[ j ] = {
-        //             "code"       : chr( 13 ) & "      " & entryPoint.tagcontext[ j ][ "codePrintPlain" ].trim(),
-        //             "className"  : entryPoint.tagcontext[ j ][ "id" ].trim(),
-        //             "fileName"   : entryPoint.tagcontext[ j ][ "template" ].trim(),
-        //             "lineNumber" : trim( entryPoint.tagcontext[ j ][ "line" ] )
-        //         };
-        //     }
-        // }
-
-        // Adobe ColdFusion 2021
-        if ( entryPoint.keyExists( "tagcontext" ) ) {
-            for ( j = 1; j <= entryPoint.tagcontext.len(); j++ ) {
-                tagContextData[ j ] = {
-                    "className"  : entryPoint.tagcontext[ j ][ "id" ].trim(),
-                    "fileName"   : entryPoint.tagcontext[ j ][ "template" ].trim(),
-                    "lineNumber" : trim( entryPoint.tagcontext[ j ][ "line" ] )
-                };
+        // TagContext is different between Lucee and ACF
+        if (isLucee) {
+            // Lucee
+            if ( entryPoint.keyExists( "tagcontext" ) ) {
+                for ( j = 1; j <= entryPoint.tagcontext.len(); j++ ) {
+                    tagContextData[ j ] = {
+                        "code"       : chr( 13 ) & "      " & entryPoint.tagcontext[ j ][ "codePrintPlain" ].trim(),
+                        "className"  : entryPoint.tagcontext[ j ][ "id" ].trim(),
+                        "fileName"   : entryPoint.tagcontext[ j ][ "template" ].trim(),
+                        "lineNumber" : trim( entryPoint.tagcontext[ j ][ "line" ] )
+                    };
+                }
+            }
+        } else if (isACF2021) {
+            // ACF 2021
+            if ( entryPoint.keyExists( "tagcontext" ) ) {
+                for ( j = 1; j <= entryPoint.tagcontext.len(); j++ ) {
+                    tagContextData[ j ] = {
+                        "className"  : entryPoint.tagcontext[ j ][ "id" ].trim(),
+                        "fileName"   : entryPoint.tagcontext[ j ][ "template" ].trim(),
+                        "lineNumber" : trim( entryPoint.tagcontext[ j ][ "line" ] )
+                    };
+                }
             }
         }
 
