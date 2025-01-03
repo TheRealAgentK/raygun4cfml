@@ -7,7 +7,13 @@ component {
     public static function getServerProductInfo() {
         var cfProductName = static.serverScope.ColdFusion.ProductName;
 
-        if (cfProductName.contains("Lucee")) {
+        if (static.serverScope.keyExists("boxlang")) {
+            return {
+                "cfServer": "Boxlang",
+                "serverVersion": static.serverScope.boxlang.version,
+                "serverMainVersion": static.serverScope.boxlang.version.listFirst(".")
+            };
+        } else if (cfProductName.contains("Lucee")) {
             return {
                 "cfServer": "Lucee",
                 "serverVersion": static.serverScope.lucee.version,
@@ -19,12 +25,6 @@ component {
                 "serverVersion": static.serverScope.coldfusion.productversion,
                 "serverMainVersion": static.serverScope.coldfusion.productversion.listFirst(),
                 "productLevel": static.serverScope.coldfusion.productlevel
-            };
-        } else if (static.serverScope.keyExists("boxlang")) {
-            return {
-                "cfServer": "Boxlang",
-                "serverVersion": static.serverScope.boxlang.version,
-                "serverMainVersion": static.serverScope.boxlang.version.listFirst(".")
             };
         } else {
             return {
