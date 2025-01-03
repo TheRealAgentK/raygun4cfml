@@ -24,4 +24,12 @@ component {
         return !serverInfo.isEmpty() && serverInfo["cfServer"] == "ACF" && serverInfo["serverMainVersion"] == "2023";
     }
 
+    /**
+     * Checks if current CFML engine is Boxlang
+     */  
+    public static boolean function isBoxlang() {
+        var serverInfo = com.raygun.tools.ProductCheck::getServerProductInfo();
+        return !serverInfo.isEmpty() && serverInfo["cfServer"] == "Boxlang";
+    }
+
 }
