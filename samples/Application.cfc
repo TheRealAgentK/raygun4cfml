@@ -6,9 +6,7 @@ component {
 
     // Map the /com directory to allow component resolution from the src folder
     // This enables cleaner imports without needing full file paths
-    this.mappings = {
-        "/com" = expandPath("/src/com")
-    };
+    this.mappings = { "/com" : expandPath( "/src/com" ) };
 
     /**
      * Runs at the start of each request
