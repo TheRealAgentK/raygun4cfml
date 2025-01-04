@@ -46,9 +46,9 @@
         "testbox":"6"
     },
     "scripts":{
-        "format":"cfformat run src/**/*.cfc,tests/**/*.cfc,tests/**/*.cfm --overwrite",
-        "format:watch":"cfformat watch src/**/*.cfc,tests/**/*.cfc,tests/**/*.cfm --overwrite",
-        "format:check":"cfformat check src/**/*.cfc,tests/**/*.cfc,tests/**/*.cfm"
+        "format":"cfformat run src/**/*.cfc,tests/**/*.cfc,tests/**/*.cfm,samples/**/*.cfc,samples/**/*.cfm --overwrite",
+        "format:watch":"cfformat watch src/**/*.cfc,tests/**/*.cfc,tests/**/*.cfm,samples/**/*.cfc,samples/**/*.cfm --overwrite",
+        "format:check":"cfformat check src/**/*.cfc,tests/**/*.cfc,tests/**/*.cfm,samples/**/*.cfc,samples/**/*.cfm"
     },
     "installPaths":{
         "testbox":"testbox/"
