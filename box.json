@@ -12,8 +12,8 @@
     "bugs":"https://github.com/MindscapeHQ/raygun4cfml/issues",
     "slug":"raygun4cfml",
     "shortDescription":"Provides integration with the Raygun CrashReporting API",
-    "description":"API provider to send error information to Raygun crash reporting for tracking and analysis",
-    "instructions":"Install this module and follow the guidelines in README.me as well as in /samples and /tests/test_manual",
+    "description":"API provider to send error information to Raygun crash reporting for tracking and analysis.",
+    "instructions":"Install this module and follow the guidelines in README.me as well as in /samples.",
     "changelog":"https://github.com/MindscapeHQ/raygun4cfml/blob/master/changelog.md",
     "keywords":[
         "error",
@@ -27,11 +27,14 @@
     "engines":[
         {
             "type":"lucee",
-            "version":">=5.0.0"
+            "version":">=5.4.0"
         },
         {
             "type":"adobe",
-            "version":">=2018.0.0"
+            "version":">=2021.0.0"
+        },
+        {
+            "type":"boxlang"
         }
     ],
     "type":"logging",
