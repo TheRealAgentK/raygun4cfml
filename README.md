@@ -4,11 +4,17 @@ Raygun4CFML
 Raygun4CFML is a client library for integrating Raygun's Crash Reporting service with your CFML applications. It enables you to send error reports and crash data to Raygun for tracking and analysis.
 
 Supported Platforms:
+
 - Adobe ColdFusion 2021+
 - Lucee 5.4+
 - Boxlang 1+
 
 Current Version: 2.0.0-alpha
+
+## Active development: Known Issues in 2.0.0-alpha
+
+- There are some uncertainties around Boxlang 1 and the CGI-scope, leading to most of the collected information related to the request currently not being available for Boxlang CFML engine crash reports.
+- No testing and work has gone into framework-specific crash reports, e.g. from Coldbox HVMC, Fusebox, CF on Wheels etc.
 
 ## Dependencies
 
@@ -89,7 +95,7 @@ The `RaygunClient` is the primary component for sending error reports. You can i
 
 - **Testing:**
 
-  The `/tests` directory contains structures for Testbox unit and BDD tests. Use these to validate your integration.
+  The `/tests` directory contains structures for Testbox unit and integration tests. Use these to validate your integration.
 
 ## Version History
 
@@ -101,6 +107,6 @@ Raygun4CFML is not an official Raygun library and is not maintained by Raygun st
 
 Contributions are welcome. 
 
-Please fork the main repository at https://github.com/MindscapeHQ/raygun4cfml, create a feature branch, and submit a pull request. Coordination via Twitter (@AgentK) or GitHub is encouraged before starting any work.
+Please fork the main repository at https://github.com/MindscapeHQ/raygun4cfml, create a feature branch, and submit a pull request. Coordination via X (@AgentK) or GitHub (https://github.com/TheRealAgentK/) is encouraged before starting any work.
 
 For more active development, visit my development fork at https://github.com/TheRealAgentK/raygun4cfml.
