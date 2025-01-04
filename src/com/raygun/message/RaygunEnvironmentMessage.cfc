@@ -40,6 +40,8 @@ component {
             returnContent[ "totalPhysicalMemory" ]     = javacast( "null", "" );
         }
 
+        returnContent[ "model" ] = com.raygun.tools.ProductCheck::getServerProductInfo().cfServer & " " & com.raygun.tools.ProductCheck::getServerProductInfo().serverVersion;
+
         return returnContent;
     }
 
