@@ -122,10 +122,7 @@ component accessors="true" {
         if ( isInstanceOf( getSettings(), "RaygunSettings" ) ) {
             var raygunSettings = getSettings().getSettings();
         }
-        var messageContent = message.build(
-            augmentedIssueData,
-            raygunSettings
-        );
+        var messageContent = message.build( augmentedIssueData, raygunSettings );
 
         if (
             isInstanceOf(
