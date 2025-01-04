@@ -38,7 +38,7 @@ component accessors="true" {
      * Primary method for sending error reports to Raygun.
      * Supports both synchronous and asynchronous transmission to accommodate
      * different error handling requirements and performance needs.
-     * 
+     *
      * @issueData Core error information to be reported
      * @userCustomData Optional diagnostic data to provide additional context
      * @tags Optional categorization tags for filtering in Raygun's dashboard

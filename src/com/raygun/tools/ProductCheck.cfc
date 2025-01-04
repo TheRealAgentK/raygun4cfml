@@ -15,7 +15,7 @@ component {
      * Determines the running CFML server type and version
      * Returns standardized server information to ensure consistent handling across different CFML engines
      * Supports Boxlang, Lucee, and Adobe ColdFusion (ACF) detection
-     * 
+     *
      * @return struct Contains normalized server information including engine type and version details
      */
     public static function getServerProductInfo() {

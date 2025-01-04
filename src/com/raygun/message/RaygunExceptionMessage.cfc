@@ -13,7 +13,7 @@ component {
      * Transforms CFML/Java exception data into Raygun's expected format.
      * Handles nested errors, database-specific errors, and both CFML tag context
      * and Java stack traces to provide comprehensive error details.
-     * 
+     *
      * @issueData The raw exception data to process
      */
     public struct function build( required struct issueData ) {
@@ -67,7 +67,7 @@ component {
      * Processes CFML's tag context to provide file and line information.
      * Includes code snippets when available (Lucee/BoxLang only) to aid debugging.
      * Adobe ColdFusion doesn't provide code snippets due to engine limitations.
-     * 
+     *
      * @entryPoint The exception data containing tag context
      */
     private array function parseTagContext( required struct entryPoint ) {
@@ -95,7 +95,7 @@ component {
      * Parses Java-style stack traces from string format into structured data.
      * Handles variations in stack trace format, including cases without line numbers.
      * Uses regex to reliably extract method, class, file and line information.
-     * 
+     *
      * @stacktrace The raw stack trace string to parse
      */
     private array function parseStackTrace( required string stacktrace ) {

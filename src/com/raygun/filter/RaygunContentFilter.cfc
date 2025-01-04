@@ -19,7 +19,7 @@ component accessors="true" {
      * Applies content filtering rules to the message payload before sending to Raygun.
      * Handles both direct key matches in the message structure and nested JSON content
      * within rawData fields to ensure comprehensive filtering of sensitive data.
-     * 
+     *
      * @messageData The Raygun message payload to filter
      */
     public struct function apply( required struct messageData ) {

@@ -14,7 +14,7 @@ component {
      * Uses multiple data sources (CGI, FORM, URL scopes) with fallbacks to ensure
      * we capture as much context as possible even if some scopes are restricted.
      * Raw request data is truncated to prevent oversized payloads.
-     * 
+     *
      * @settings Optional configuration settings, primarily for controlling raw data length
      */
     public struct function build( struct settings = {} ) {

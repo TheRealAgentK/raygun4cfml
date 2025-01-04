@@ -12,7 +12,7 @@ component {
     /**
      * Constructs a detailed environment snapshot for error context.
      * Uses Java system properties and management beans to gather runtime metrics.
-     * Falls back gracefully if certain metrics are unavailable due to security 
+     * Falls back gracefully if certain metrics are unavailable due to security
      * restrictions or JVM limitations.
      */
     public struct function build() {

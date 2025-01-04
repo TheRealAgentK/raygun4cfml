@@ -27,7 +27,7 @@ component accessors="true" {
      * Constructs the complete error report payload for Raygun.
      * This method aggregates all the different components of an error report into a single structure
      * that matches Raygun's API expectations.
-     * 
+     *
      * @issueData The core error data to be processed
      * @settings Optional configuration settings that may affect how the request data is processed
      */
