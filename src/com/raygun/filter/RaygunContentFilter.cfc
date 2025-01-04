@@ -40,14 +40,14 @@ component accessors="true" {
             // Handle the special case of rawData fields that may contain JSON
             // This ensures sensitive data nested in JSON payloads is also filtered
             if ( !isNull( arguments.messageData.details.request.rawData ) && isJSON( arguments.messageData.details.request.rawData ) ) {
-                var rawDataJSON             = deserializeJSON(arguments.messageData.details.request.rawData);
+                var rawDataJSON             = deserializeJSON( arguments.messageData.details.request.rawData );
                 var findRawDataKeysByFilter = rawDataJSON.findKey( matcher.filter, "all" );
 
                 for ( var element in findRawDataKeysByFilter ) {
                     element.owner[ matcher.filter ] = matcher.replacement;
                 }
                 // Re-serialize the filtered rawData JSON back into the message
-                arguments.messageData.details.request.rawData = serializeJSON(rawDataJSON);
+                arguments.messageData.details.request.rawData = serializeJSON( rawDataJSON );
             }
         }
 

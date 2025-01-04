@@ -42,66 +42,66 @@ component extends="testbox.system.BaseSpec" {
             } );
 
             // Ensures the component initializes with an empty custom data structure
-            it("should initialize with empty custom data", function() {
-                expect(variables.raygunUserCustomData.getUserCustomData()).toBeStruct();
-                expect(variables.raygunUserCustomData.getUserCustomData()).toBeEmpty();
-            });
+            it( "should initialize with empty custom data", function() {
+                expect( variables.raygunUserCustomData.getUserCustomData() ).toBeStruct();
+                expect( variables.raygunUserCustomData.getUserCustomData() ).toBeEmpty();
+            } );
 
             // Tests adding and retrieving a single key-value pair in custom data
-            it("should add and retrieve single data item", function() {
-                variables.raygunUserCustomData.add("testKey", "testValue");
-                
+            it( "should add and retrieve single data item", function() {
+                variables.raygunUserCustomData.add( "testKey", "testValue" );
+
                 var data = variables.raygunUserCustomData.getUserCustomData();
-                expect(data.testKey).toBe("testValue");
-            });
+                expect( data.testKey ).toBe( "testValue" );
+            } );
 
             // Tests adding and retrieving multiple key-value pairs in custom data
-            it("should add and retrieve multiple data items", function() {
-                variables.raygunUserCustomData.add("key1", "value1");
-                variables.raygunUserCustomData.add("key2", 123);
-                variables.raygunUserCustomData.add("key3", true);
-                
+            it( "should add and retrieve multiple data items", function() {
+                variables.raygunUserCustomData.add( "key1", "value1" );
+                variables.raygunUserCustomData.add( "key2", 123 );
+                variables.raygunUserCustomData.add( "key3", true );
+
                 var data = variables.raygunUserCustomData.getUserCustomData();
-                expect(data.key1).toBe("value1");
-                expect(data.key2).toBe(123);
-                expect(data.key3).toBeTrue();
-            });
+                expect( data.key1 ).toBe( "value1" );
+                expect( data.key2 ).toBe( 123 );
+                expect( data.key3 ).toBeTrue();
+            } );
 
             // Tests handling of complex data types like arrays and structs
-            it("should handle complex data types", function() {
-                var arrayData = [1,2,3];
-                var structData = {a: 1, b: 2};
-                
-                variables.raygunUserCustomData.add("arrayKey", arrayData);
-                variables.raygunUserCustomData.add("structKey", structData);
-                
+            it( "should handle complex data types", function() {
+                var arrayData  = [ 1, 2, 3 ];
+                var structData = { a : 1, b : 2 };
+
+                variables.raygunUserCustomData.add( "arrayKey", arrayData );
+                variables.raygunUserCustomData.add( "structKey", structData );
+
                 var data = variables.raygunUserCustomData.getUserCustomData();
-                expect(data.arrayKey).toBe(arrayData);
-                expect(data.structKey).toBe(structData);
-            });
+                expect( data.arrayKey ).toBe( arrayData );
+                expect( data.structKey ).toBe( structData );
+            } );
 
             // Tests that adding a new value with an existing key overrides the old value
-            it("should override existing keys", function() {
-                variables.raygunUserCustomData.add("testKey", "originalValue");
-                variables.raygunUserCustomData.add("testKey", "newValue");
-                
-                expect(variables.raygunUserCustomData.getUserCustomData().testKey).toBe("newValue");
-            });
+            it( "should override existing keys", function() {
+                variables.raygunUserCustomData.add( "testKey", "originalValue" );
+                variables.raygunUserCustomData.add( "testKey", "newValue" );
+
+                expect( variables.raygunUserCustomData.getUserCustomData().testKey ).toBe( "newValue" );
+            } );
 
             // Verifies that the build function returns the correct custom data message
-            it("should build custom data message", function() {
+            it( "should build custom data message", function() {
                 var testData = new com.raygun.user.RaygunUserCustomData();
-                testData.add("string", "value");
-                testData.add("number", 42);
-                testData.add("boolean", true);
-                
+                testData.add( "string", "value" );
+                testData.add( "number", 42 );
+                testData.add( "boolean", true );
+
                 var message = testData.build();
-                
-                expect(message).toBeStruct();
-                expect(message.string).toBe("value");
-                expect(message.number).toBe(42);
-                expect(message.boolean).toBeTrue();
-            });
+
+                expect( message ).toBeStruct();
+                expect( message.string ).toBe( "value" );
+                expect( message.number ).toBe( 42 );
+                expect( message.boolean ).toBeTrue();
+            } );
         } );
     }
 
