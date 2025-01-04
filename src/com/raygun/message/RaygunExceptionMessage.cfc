@@ -50,14 +50,14 @@ component {
             if ( !returnContent[ "message" ].len() ) returnContent[ "message" ] = "SQL/DB issue";
 
             var databaseData                                           = {};
-            returnContent[ "data" ][ "database" ][ "detail" ]          = ( entryPoint.keyExists( "detail" ) && entryPoint.detail.len() ) ? entryPoint.detail : "";
-            returnContent[ "data" ][ "database" ][ "sql" ]             = ( entryPoint.keyExists( "sql" ) && entryPoint.sql.len() ) ? entryPoint.sql : "";
-            returnContent[ "data" ][ "database" ][ "queryError" ]      = ( entryPoint.keyExists( "queryError" ) && entryPoint.queryError.len() ) ? entryPoint.queryError : "";
-            returnContent[ "data" ][ "database" ][ "nativeErrorCode" ] = (
+            databaseData[ "detail" ]                                  = ( entryPoint.keyExists( "detail" ) && entryPoint.detail.len() ) ? entryPoint.detail : "";
+            databaseData[ "sql" ]                                     = ( entryPoint.keyExists( "sql" ) && entryPoint.sql.len() ) ? entryPoint.sql : "";
+            databaseData[ "queryError" ]                              = ( entryPoint.keyExists( "queryError" ) && entryPoint.queryError.len() ) ? entryPoint.queryError : "";
+            databaseData[ "nativeErrorCode" ]                         = (
                 entryPoint.keyExists( "nativeErrorCode" ) && len( entryPoint.nativeErrorCode )
             ) ? entryPoint.nativeErrorCode : "";
-            returnContent[ "data" ][ "database" ][ "SQLState" ] = ( entryPoint.keyExists( "SQLState" ) && entryPoint.SQLState.len() ) ? entryPoint.SQLState : "";
-            returnContent[ "data" ][ "database" ]               = databaseData;
+            databaseData[ "SQLState" ] = ( entryPoint.keyExists( "SQLState" ) && entryPoint.SQLState.len() ) ? entryPoint.SQLState : "";
+            returnContent[ "data" ][ "database" ] = databaseData;
         }
 
         return returnContent;
@@ -100,8 +100,7 @@ component {
      */
     private array function parseStackTrace( required string stacktrace ) {
         var stackTraceData  = [];
-        var stackTraceLines = stacktrace.split( "\sat" );
-
+        var stackTraceLines = stacktrace.split( "\s*at" );
         for ( var j = 2; j <= arrayLen( stackTraceLines ); j++ ) {
             // Split into method/class info and file/line info
             var stackTraceLineElements = stackTraceLines[ j ].split( "\(" );
