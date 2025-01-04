@@ -33,8 +33,6 @@ TODOS:
     - Support for any versions of Railo has been stopped. Lucee support is set to Lucee 5.4 and newer, but this might be extended to 5.3 in a future 2.0.0 pre-release.
     - Support for Boxlang 1.0.0 has been added. Please be aware that there is currently an issue with Boxlang's CGI scope, so the request information in Raygun from Boxlang servers will be limited.
 
-
-
 1.7.0 (November 14 2024)
 
 - Fixes issues around non-existent HTTP request objects when run on ACF and in a thread context
