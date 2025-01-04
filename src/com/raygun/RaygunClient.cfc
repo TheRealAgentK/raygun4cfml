@@ -1,5 +1,11 @@
+/**
+ * Primary client for sending error reports to Raygun's API.
+ * Handles payload construction, filtering, and transmission while managing
+ * cross-platform compatibility between different CFML engines.
+ */
 component accessors="true" {
 
+    // Core configuration properties required for Raygun integration
     property name="apiKey"        type="string"              default="";
     property name="contentFilter" type="RaygunContentFilter" default="";
     property name="appVersion"    type="string"              default="";
@@ -29,7 +35,16 @@ component accessors="true" {
     }
 
     /**
-     * Send error report to Raygun
+     * Primary method for sending error reports to Raygun.
+     * Supports both synchronous and asynchronous transmission to accommodate
+     * different error handling requirements and performance needs.
+     * 
+     * @issueData Core error information to be reported
+     * @userCustomData Optional diagnostic data to provide additional context
+     * @tags Optional categorization tags for filtering in Raygun's dashboard
+     * @user Optional user identification for tracking affected users
+     * @groupingKey Optional key to control how Raygun groups similar errors
+     * @sendAsync Whether to send the report asynchronously to prevent blocking
      */
     public function send(
         required any issueData,
@@ -67,7 +82,8 @@ component accessors="true" {
     }
 
     /**
-     * Send error report to Raygun asynchronously, falls through to send()
+     * Convenience method for asynchronous error reporting.
+     * Wraps the main send() method to simplify async reporting scenarios.
      */
     public void function sendAsync(
         required any issueData,
@@ -81,7 +97,9 @@ component accessors="true" {
     }
 
     /**
-     * Build the payload for Raygun
+     * Constructs the JSON payload for Raygun's API.
+     * Handles data augmentation, validation, and cross-platform JSON compatibility issues.
+     * Applies content filtering if configured to protect sensitive data.
      */
     private string function buildPayload(
         required any issueData,
@@ -93,6 +111,7 @@ component accessors="true" {
         var augmentedIssueData = {};
         augmentedIssueData.append( duplicate( arguments.issueData ) );
 
+        // API key validation is critical as Raygun will reject requests without valid authentication
         if ( !getApiKey().len() ) {
             throw( "API key not set, cannot send message to Raygun" );
         }
@@ -119,11 +138,13 @@ component accessors="true" {
 
         var message        = new message.RaygunMessage();
         var raygunSettings = {};
+        // Only apply settings if they've been properly initialized
         if ( isInstanceOf( getSettings(), "RaygunSettings" ) ) {
             var raygunSettings = getSettings().getSettings();
         }
         var messageContent = message.build( augmentedIssueData, raygunSettings );
 
+        // Apply content filtering if configured to protect sensitive data
         if (
             isInstanceOf(
                 getContentFilter(),
@@ -135,15 +156,8 @@ component accessors="true" {
 
         var jsonData = messageContent.toJSON();
 
-        // Adobe CF workaround:
-        //
-        // Remove '//' in case ACF is adding it when serializing JSON (which is suggested to be set up in the ACF Lockdown Guide)
-        // I believe actually following the Lockdown Guide's suggestion is not a good idea, but some users might have set up a custom prefix for JSON data serialization.
-        //
-        // Notes:
-        //
-        // - This will only work if the user has setup none or the default prefix for JSON data.
-        // - If the user has setup a custom prefix like '--abc', this will not work and the user will need to manually remove the prefix.
+        // Handle ACF's JSON serialization quirks to ensure compatibility
+        // Some ACF security configurations add prefixes to JSON output that Raygun won't accept
         jsonData = jsonData
             .trim()
             .replaceNoCase( "//{", "{" )
@@ -153,7 +167,9 @@ component accessors="true" {
     }
 
     /**
-     * Send the payload to Raygun
+     * Handles the actual HTTP transmission to Raygun's API.
+     * Supports both synchronous and asynchronous transmission patterns.
+     * Includes error logging for async failures to aid debugging.
      */
     private any function sendPayload(
         required string jsonData,
@@ -162,6 +178,7 @@ component accessors="true" {
         var postResult = "";
 
         if ( arguments.sendAsync ) {
+            // Use threading for async transmission to prevent blocking the main request
             thread action="run" name="sendAsyncToRaygunThead_#createUUID()#" apiKey=getApiKey() payload=arguments.jsonData {
                 try {
                     cfhttp(
@@ -186,6 +203,7 @@ component accessors="true" {
                         );
                     }
                 } catch ( any e ) {
+                    // Log async failures since they can't be reported back to the caller
                     writeLog(
                         text = "Error when trying to send to Raygun async: #serializeJSON( e )#",
                         type = "error",
@@ -194,6 +212,7 @@ component accessors="true" {
                 }
             }
         } else {
+            // Synchronous transmission allows error handling by the caller
             cfhttp(
                 url     = "https://api.raygun.com/entries",
                 method  = "post",
