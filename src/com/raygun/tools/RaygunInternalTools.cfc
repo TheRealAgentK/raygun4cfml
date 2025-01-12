@@ -14,7 +14,7 @@ component {
      */
     public static boolean function isLucee() {
         var serverInfo = com.raygun.tools.ProductCheck::getServerProductInfo();
-        return !serverInfo.isEmpty() && serverInfo[ "cfServer" ] == "Lucee";
+        return !serverInfo.isEmpty() && serverInfo[ "cfmlEngine" ] == "Lucee";
     }
 
     /**
@@ -24,17 +24,17 @@ component {
      */
     public static boolean function isACF2021() {
         var serverInfo = com.raygun.tools.ProductCheck::getServerProductInfo();
-        return !serverInfo.isEmpty() && serverInfo[ "cfServer" ] == "ACF" && serverInfo[ "serverMainVersion" ] == "2021";
+        return !serverInfo.isEmpty() && serverInfo[ "cfmlEngine" ] == "ACF" && serverInfo[ "serverMainVersion" ] == "2021";
     }
 
     /**
      * Detects ACF 2023 to handle its enhanced security features and
      * modernized error handling system. ACF 2023 includes significant
-     * changes to thread handling and scope access that affect error capture.
+     * changes to thread handling and scope access that can affect error capture.
      */
     public static boolean function isACF2023() {
         var serverInfo = com.raygun.tools.ProductCheck::getServerProductInfo();
-        return !serverInfo.isEmpty() && serverInfo[ "cfServer" ] == "ACF" && serverInfo[ "serverMainVersion" ] == "2023";
+        return !serverInfo.isEmpty() && serverInfo[ "cfmlEngine" ] == "ACF" && serverInfo[ "serverMainVersion" ] == "2023";
     }
 
     /**
@@ -44,7 +44,7 @@ component {
      */
     public static boolean function isBoxlang() {
         var serverInfo = com.raygun.tools.ProductCheck::getServerProductInfo();
-        return !serverInfo.isEmpty() && serverInfo[ "cfServer" ] == "Boxlang";
+        return !serverInfo.isEmpty() && serverInfo[ "cfmlEngine" ] == "Boxlang";
     }
 
 }

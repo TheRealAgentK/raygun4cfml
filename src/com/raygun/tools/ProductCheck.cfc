@@ -19,25 +19,23 @@ component {
      * @return struct Contains normalized server information including engine type and version details
      */
     public static function getServerProductInfo() {
-        var cfProductName = static.serverScope.ColdFusion.ProductName;
 
-        // Check for Boxlang first as it's a special case that doesn't follow standard naming conventions
         if ( static.serverScope.keyExists( "boxlang" ) ) {
             return {
-                "cfServer"          : "Boxlang",
+                "cfmlEngine"          : "Boxlang",
                 "serverVersion"     : static.serverScope.boxlang.version,
                 "serverMainVersion" : static.serverScope.boxlang.version.listFirst( "." )
             };
-        } else if ( cfProductName.contains( "Lucee" ) ) {
+        } else if ( static.serverScope.keyExists( "lucee" ) ) {
             return {
-                "cfServer"          : "Lucee",
+                "cfmlEngine"          : "Lucee",
                 "serverVersion"     : static.serverScope.lucee.version,
                 "serverMainVersion" : static.serverScope.lucee.version.listFirst( "." )
             };
-        } else if ( cfProductName.contains( "ColdFusion" ) ) {
+        } else if ( static.serverScope.keyExists( "coldfusion" ) ) {
             // ACF requires additional product level information for proper version handling
             return {
-                "cfServer"          : "ACF",
+                "cfmlEngine"          : "ACF",
                 "serverVersion"     : static.serverScope.coldfusion.productversion,
                 "serverMainVersion" : static.serverScope.coldfusion.productversion.listFirst(),
                 "productLevel"      : static.serverScope.coldfusion.productlevel
@@ -45,7 +43,7 @@ component {
         } else {
             // Fallback for unknown server types to prevent errors in calling code
             return {
-                "cfServer"      : "",
+                "cfmlEngine"      : "",
                 "serverVersion" : ""
             };
         }
