@@ -1,15 +1,21 @@
-History
-=======
+History and Plan
+================
 
-2.0.0-beta FUTURE, TBD
+2.1+ Plan
 
-TODOS:
-
-- Integration and adaptation to Coldbox error reporting, adding CB HMVC app/API samples
 - Making Raygun4CFML a Coldbox module OR building a Coldbox module wrapper using Raygun4CFML as a dependency.
 - Add breadcrumbs (#46)
+
+2.0.1 Plan
+
 - Add support for response.statusCode (#48)
-- Investigate supporting Lucee 5.3 in Raygun4CFML 2.x
+- Integration and adaptation to Coldbox error reporting, adding CB HMVC app/API samples
+- Cleanup `legacy` directory
+
+2.0.0 (Jan 12 2025)
+
+- Fixed issue with Boxlang CGI-Scope
+- Added Lucee 5.3 support back-in and provided test server setup
 
 2.0.0-alpha (January 4 2025)
 
@@ -31,7 +37,7 @@ TODOS:
 - Engine-specific changes:
     - Support for Adobe ColdFusion *before* ACF 2021 has been stopped. ACF 2018 and earlier are - as CFML engines go - not supported any more, please upgrade your platforms.
     - Support for any versions of Railo has been stopped. Lucee support is set to Lucee 5.4 and newer, but this might be extended to 5.3 in a future 2.0.0 pre-release.
-    - Support for Boxlang 1.0.0 has been added. Please be aware that there is currently an issue with Boxlang's CGI scope, so the request information in Raygun from Boxlang servers will be limited.
+    - Support for Boxlang 1.0.0 has been added. 
 
 1.7.0 (November 14 2024)
 

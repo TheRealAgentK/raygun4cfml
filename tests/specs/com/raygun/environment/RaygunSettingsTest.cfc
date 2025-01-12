@@ -6,15 +6,13 @@ component extends="testbox.system.BaseSpec" {
 
     function run() {
         describe( "RaygunSettings", function() {
-            
             it( "should initialize with default raw data max length", function() {
-                expect( variables.settings.getRawDataMaxLength() )
-                    .toBe( com.raygun.environment.RaygunConfig::getRawDataMaxLengthDefault() );
+                expect( variables.settings.getRawDataMaxLength() ).toBe( com.raygun.environment.RaygunConfig::getRawDataMaxLengthDefault() );
             } );
 
             it( "should initialize with custom raw data max length", function() {
                 var customLength = 8192;
-                var settings = new com.raygun.environment.RaygunSettings( customLength );
+                var settings     = new com.raygun.environment.RaygunSettings( customLength );
                 expect( settings.getRawDataMaxLength() ).toBe( customLength );
             } );
 
@@ -26,4 +24,5 @@ component extends="testbox.system.BaseSpec" {
             } );
         } );
     }
-} 
+
+}

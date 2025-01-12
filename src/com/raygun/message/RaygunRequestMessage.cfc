@@ -43,13 +43,13 @@ component {
 
         // Build core request data, defaulting to null for missing values to maintain API compatibility
         returnContent = {
-            "hostName" : ( Len( CGI.HTTP_HOST ) ? CGI.HTTP_HOST : javacast( "null", "" ) ),
-            "url"      : ( Len( CGI.SCRIPT_NAME ) ? CGI.SCRIPT_NAME : javacast( "null", "" ) ) & (
-                Len( CGI.PATH_INFO ) ? CGI.PATH_INFO : javacast( "null", "" )
+            "hostName" : ( len( CGI.HTTP_HOST ) ? CGI.HTTP_HOST : javacast( "null", "" ) ),
+            "url"      : ( len( CGI.SCRIPT_NAME ) ? CGI.SCRIPT_NAME : javacast( "null", "" ) ) & (
+                len( CGI.PATH_INFO ) ? CGI.PATH_INFO : javacast( "null", "" )
             ),
-            "httpMethod"  : ( Len( CGI.REQUEST_METHOD ) ? CGI.REQUEST_METHOD : javacast( "null", "" ) ),
-            "iPAddress"   : ( Len( CGI.REMOTE_ADDR ) ? CGI.REMOTE_ADDR : javacast( "null", "" ) ),
-            "queryString" : ( Len( CGI.QUERY_STRING ) ? CGI.QUERY_STRING : javacast( "null", "" ) ),
+            "httpMethod"  : ( len( CGI.REQUEST_METHOD ) ? CGI.REQUEST_METHOD : javacast( "null", "" ) ),
+            "iPAddress"   : ( len( CGI.REMOTE_ADDR ) ? CGI.REMOTE_ADDR : javacast( "null", "" ) ),
+            "queryString" : ( len( CGI.QUERY_STRING ) ? CGI.QUERY_STRING : javacast( "null", "" ) ),
             "headers"     : ( httpRequest.keyExists( "headers" ) ? httpRequest.headers : javacast( "null", "" ) ),
             "data"        : CGI,
             "form"        : localForm,
@@ -59,7 +59,7 @@ component {
         // Only include raw request data for non-standard content types to avoid duplicating form data
         // Also enforces a max length to prevent oversized payloads
         if (
-            Len( CGI.CONTENT_TYPE ) && Len( CGI.REQUEST_METHOD ) && CGI.CONTENT_TYPE != "text/html" && CGI.CONTENT_TYPE != "application/x-www-form-urlencoded" && CGI.REQUEST_METHOD != "GET"
+            len( CGI.CONTENT_TYPE ) && len( CGI.REQUEST_METHOD ) && CGI.CONTENT_TYPE != "text/html" && CGI.CONTENT_TYPE != "application/x-www-form-urlencoded" && CGI.REQUEST_METHOD != "GET"
         ) {
             var maxLength = (
                 arguments.settings.keyExists( "rawDataMaxLength" ) ? arguments.settings.rawDataMaxLength : com.raygun.environment.RaygunConfig::getRawDataMaxLengthDefault()

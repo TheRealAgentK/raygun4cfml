@@ -19,23 +19,22 @@ component {
      * @return struct Contains normalized server information including engine type and version details
      */
     public static function getServerProductInfo() {
-
         if ( static.serverScope.keyExists( "boxlang" ) ) {
             return {
-                "cfmlEngine"          : "Boxlang",
+                "cfmlEngine"        : "Boxlang",
                 "serverVersion"     : static.serverScope.boxlang.version,
                 "serverMainVersion" : static.serverScope.boxlang.version.listFirst( "." )
             };
         } else if ( static.serverScope.keyExists( "lucee" ) ) {
             return {
-                "cfmlEngine"          : "Lucee",
+                "cfmlEngine"        : "Lucee",
                 "serverVersion"     : static.serverScope.lucee.version,
                 "serverMainVersion" : static.serverScope.lucee.version.listFirst( "." )
             };
         } else if ( static.serverScope.keyExists( "coldfusion" ) ) {
             // ACF requires additional product level information for proper version handling
             return {
-                "cfmlEngine"          : "ACF",
+                "cfmlEngine"        : "ACF",
                 "serverVersion"     : static.serverScope.coldfusion.productversion,
                 "serverMainVersion" : static.serverScope.coldfusion.productversion.listFirst(),
                 "productLevel"      : static.serverScope.coldfusion.productlevel
@@ -43,7 +42,7 @@ component {
         } else {
             // Fallback for unknown server types to prevent errors in calling code
             return {
-                "cfmlEngine"      : "",
+                "cfmlEngine"    : "",
                 "serverVersion" : ""
             };
         }

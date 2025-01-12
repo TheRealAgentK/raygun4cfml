@@ -49,14 +49,12 @@ component {
         if ( entryPoint.type == "database" ) {
             if ( !returnContent[ "message" ].len() ) returnContent[ "message" ] = "SQL/DB issue";
 
-            var databaseData                                           = {};
-            databaseData[ "detail" ]                                  = ( entryPoint.keyExists( "detail" ) && entryPoint.detail.len() ) ? entryPoint.detail : "";
-            databaseData[ "sql" ]                                     = ( entryPoint.keyExists( "sql" ) && entryPoint.sql.len() ) ? entryPoint.sql : "";
-            databaseData[ "queryError" ]                              = ( entryPoint.keyExists( "queryError" ) && entryPoint.queryError.len() ) ? entryPoint.queryError : "";
-            databaseData[ "nativeErrorCode" ]                         = (
-                entryPoint.keyExists( "nativeErrorCode" ) && len( entryPoint.nativeErrorCode )
-            ) ? entryPoint.nativeErrorCode : "";
-            databaseData[ "SQLState" ] = ( entryPoint.keyExists( "SQLState" ) && entryPoint.SQLState.len() ) ? entryPoint.SQLState : "";
+            var databaseData                      = {};
+            databaseData[ "detail" ]              = ( entryPoint.keyExists( "detail" ) && entryPoint.detail.len() ) ? entryPoint.detail : "";
+            databaseData[ "sql" ]                 = ( entryPoint.keyExists( "sql" ) && entryPoint.sql.len() ) ? entryPoint.sql : "";
+            databaseData[ "queryError" ]          = ( entryPoint.keyExists( "queryError" ) && entryPoint.queryError.len() ) ? entryPoint.queryError : "";
+            databaseData[ "nativeErrorCode" ]     = ( entryPoint.keyExists( "nativeErrorCode" ) && len( entryPoint.nativeErrorCode ) ) ? entryPoint.nativeErrorCode : "";
+            databaseData[ "SQLState" ]            = ( entryPoint.keyExists( "SQLState" ) && entryPoint.SQLState.len() ) ? entryPoint.SQLState : "";
             returnContent[ "data" ][ "database" ] = databaseData;
         }
 

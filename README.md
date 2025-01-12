@@ -6,15 +6,16 @@ Raygun4CFML is a client library for integrating Raygun's Crash Reporting service
 Supported Platforms:
 
 - Adobe ColdFusion 2021+
-- Lucee 5.4+
+- Lucee 5.3+
 - Boxlang 1+
 
-Current Version: 2.0.0-alpha
+Current Version: 2.0.0
 
-## Active development: Known Issues in 2.0.0-alpha
+## Active development
 
-- There are some uncertainties around Boxlang 1 and the CGI-scope, leading to most of the collected information related to the request currently not being available for Boxlang CFML engine crash reports.
-- No testing and work has gone into framework-specific crash reports, e.g. from Coldbox HVMC, Fusebox, CF on Wheels etc.
+2.0.0 is a complete rewrite of the project and is ready-to-use for the 3 major CFML engines and their crash reports. 
+
+Please be aware that no testing and work has *yet* gone into framework-specific crash reports, e.g. a deeper integration with Coldbox HVMC, Fusebox, CF on Wheels etc. This will be added over time in future releases.
 
 ## Dependencies
 
@@ -69,23 +70,15 @@ The `RaygunClient` is the primary component for sending error reports. You can i
 
   Place the contents of `/src` in your webroot and initialize the `RaygunClient` as follows:
   ```cfml
-  raygun = createObject("component", "nz.co.ventego-creative.raygun4cfml.RaygunClient").init(
+  raygun = createObject("component", "com.raygun.RaygunClient").init(
       apiKey = "YOURAPIKEYHERE"
   );
   ```
 
 - **Custom Mapping:**
 
-  Place the contents of `/src` in a directory of your choice and create a mapping to `/com` in your server administrator or through code. Then, use the initialization code above.
+  Place the contents of `/src` in a directory of your choice and create a mapping to `/com` in your server administrator or through code. Them, initialise as suitable for the mapping.
 
-- **Direct Mapping:**
-
-  If your CFML environment has a mapping pointing to the `raygun4cfml` directory, instantiate `RaygunClient` like this:
-  ```cfml
-  raygun = createObject("component", "RaygunClient").init(
-      apiKey = "YOURAPIKEYHERE"
-  );
-  ```
 
 ### Using the Library
 
