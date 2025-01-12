@@ -27,14 +27,6 @@ component {
             var httpRequest = {};
         }
 
-        // CGI scope access may be restricted in some locked-down environments
-        // Todo: This is currently an issue in Boxlang 1.0.0 (see Boxlang Jira BL-901 and -902)`
-        try {
-            var localCGI = duplicate( CGI );
-        } catch ( any e ) {
-            var localCGI = {};
-        }
-
         // Form scope might not exist for non-POST requests
         try {
             var localForm = duplicate( FORM );
@@ -51,15 +43,15 @@ component {
 
         // Build core request data, defaulting to null for missing values to maintain API compatibility
         returnContent = {
-            "hostName" : ( localCGI.keyExists( "HTTP_HOST" ) ? localCGI.HTTP_HOST : javacast( "null", "" ) ),
-            "url"      : ( localCGI.keyExists( "SCRIPT_NAME" ) ? localCGI.SCRIPT_NAME : javacast( "null", "" ) ) & (
-                localCGI.keyExists( "PATH_INFO" ) ? localCGI.PATH_INFO : javacast( "null", "" )
+            "hostName" : ( Len( CGI.HTTP_HOST ) ? CGI.HTTP_HOST : javacast( "null", "" ) ),
+            "url"      : ( Len( CGI.SCRIPT_NAME ) ? CGI.SCRIPT_NAME : javacast( "null", "" ) ) & (
+                Len( CGI.PATH_INFO ) ? CGI.PATH_INFO : javacast( "null", "" )
             ),
-            "httpMethod"  : ( localCGI.keyExists( "REQUEST_METHOD" ) ? localCGI.REQUEST_METHOD : javacast( "null", "" ) ),
-            "iPAddress"   : ( localCGI.keyExists( "REMOTE_ADDR" ) ? localCGI.REMOTE_ADDR : javacast( "null", "" ) ),
-            "queryString" : ( localCGI.keyExists( "QUERY_STRING" ) ? localCGI.QUERY_STRING : javacast( "null", "" ) ),
+            "httpMethod"  : ( Len( CGI.REQUEST_METHOD ) ? CGI.REQUEST_METHOD : javacast( "null", "" ) ),
+            "iPAddress"   : ( Len( CGI.REMOTE_ADDR ) ? CGI.REMOTE_ADDR : javacast( "null", "" ) ),
+            "queryString" : ( Len( CGI.QUERY_STRING ) ? CGI.QUERY_STRING : javacast( "null", "" ) ),
             "headers"     : ( httpRequest.keyExists( "headers" ) ? httpRequest.headers : javacast( "null", "" ) ),
-            "data"        : localCGI,
+            "data"        : CGI,
             "form"        : localForm,
             "params"      : localUrl
         };
@@ -67,7 +59,7 @@ component {
         // Only include raw request data for non-standard content types to avoid duplicating form data
         // Also enforces a max length to prevent oversized payloads
         if (
-            localCGI.keyExists( "CONTENT_TYPE" ) && localCGI.keyExists( "REQUEST_METHOD" ) && localCGI.CONTENT_TYPE != "text/html" && localCGI.CONTENT_TYPE != "application/x-www-form-urlencoded" && localCGI.REQUEST_METHOD != "GET"
+            Len( CGI.CONTENT_TYPE ) && Len( CGI.REQUEST_METHOD ) && CGI.CONTENT_TYPE != "text/html" && CGI.CONTENT_TYPE != "application/x-www-form-urlencoded" && CGI.REQUEST_METHOD != "GET"
         ) {
             var maxLength = (
                 arguments.settings.keyExists( "rawDataMaxLength" ) ? arguments.settings.rawDataMaxLength : com.raygun.environment.RaygunConfig::getRawDataMaxLengthDefault()

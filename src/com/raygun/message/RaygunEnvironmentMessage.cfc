@@ -60,7 +60,7 @@ component {
         }
 
         // Include CFML engine details for runtime context
-        returnContent[ "model" ] = com.raygun.tools.ProductCheck::getServerProductInfo().cfServer & " " & com.raygun.tools.ProductCheck::getServerProductInfo().serverVersion;
+        returnContent[ "model" ] = com.raygun.tools.ProductCheck::getServerProductInfo().cfmlEngine & " " & com.raygun.tools.ProductCheck::getServerProductInfo().serverVersion;
 
         return returnContent;
     }
