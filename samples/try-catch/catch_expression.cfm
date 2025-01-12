@@ -1,6 +1,6 @@
 <cfscript>
     // API key for Raygun error tracking service
-    RAYGUNAPIKEY = "V84wUYVR5lWGHgVMq5Cxig";
+    RAYGUNAPIKEY = "<YOUR API KEY>";
 
     // Deliberately trigger a division by zero error to demonstrate 
     // error handling and reporting to Raygun in a simple scenario

@@ -1,5 +1,5 @@
 <!--- API key for Raygun error tracking service --->
-<cfset RAYGUNAPIKEY = "V84wUYVR5lWGHgVMq5Cxig">
+<cfset RAYGUNAPIKEY = "<YOUR API KEY>">
 <cftry>
     <!--- Attempt database query that may fail --->
     <cfquery datasource="something">
