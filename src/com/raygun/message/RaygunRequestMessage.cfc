@@ -27,6 +27,13 @@ component {
             var httpRequest = {};
         }
 
+        // Original CGI scope is often not writable, this can become a problem when using the RaygunContentFilter
+        try {
+            var localCGI = duplicate( CGI );
+        } catch ( any e ) {
+            var localCGI = {};
+        }
+
         // Form scope might not exist for non-POST requests
         try {
             var localForm = duplicate( FORM );
@@ -42,16 +49,15 @@ component {
         }
 
         // Build core request data, defaulting to null for missing values to maintain API compatibility
-        returnContent = {
+         returnContent = {
             "hostName" : ( len( CGI.HTTP_HOST ) ? CGI.HTTP_HOST : javacast( "null", "" ) ),
-            "url"      : ( len( CGI.SCRIPT_NAME ) ? CGI.SCRIPT_NAME : javacast( "null", "" ) ) & (
-                len( CGI.PATH_INFO ) ? CGI.PATH_INFO : javacast( "null", "" )
+            "url"      : ( len( CGI.SCRIPT_NAME ) ? CGI.SCRIPT_NAME : javacast( "null", "" ) ) & ( len( CGI.PATH_INFO ) ? CGI.PATH_INFO : javacast( "null", "" )
             ),
             "httpMethod"  : ( len( CGI.REQUEST_METHOD ) ? CGI.REQUEST_METHOD : javacast( "null", "" ) ),
             "iPAddress"   : ( len( CGI.REMOTE_ADDR ) ? CGI.REMOTE_ADDR : javacast( "null", "" ) ),
             "queryString" : ( len( CGI.QUERY_STRING ) ? CGI.QUERY_STRING : javacast( "null", "" ) ),
             "headers"     : ( httpRequest.keyExists( "headers" ) ? httpRequest.headers : javacast( "null", "" ) ),
-            "data"        : CGI,
+            "data"        : localCGI,
             "form"        : localForm,
             "params"      : localUrl
         };
